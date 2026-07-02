@@ -15,6 +15,8 @@ function ImageSlider() {
 
     }, 5000)
     return () => clearInterval(interval);
+    //prevents emmory leaks, if we go to another component, the timer will keep on running in the background.
+    //the interval will be cleared when the component unmounts
   }, [])
   return (
     <div className="image-slider-container">
@@ -24,6 +26,7 @@ function ImageSlider() {
           <img src={image} alt={`Slide ${index + 1}`} />
         </div>))
         }
+        {/* array.map((element, index, array) => {}) */}
       </div>
 
       <div className="slider-dots">
@@ -36,3 +39,28 @@ function ImageSlider() {
 }
 
 export default ImageSlider
+
+/*
+Uswe of key-->
+
+You receive:
+banner1
+banner2
+banner3
+React creates three DOM elements.
+Position 0 → banner1
+
+Position 1 → banner2
+
+Position 2 → banner3
+
+Later
+
+The array becomes:
+
+newBanner
+banner1
+banner2
+banner3
+everytime new dom created, inside of only once.
+*/
