@@ -40,6 +40,12 @@ function Rating({ value, onRatingChange, disabled }) {
                     key={i}
                     className={`star ${isFilled ? 'filled' : 'empty'}`}
                     onMouseEnter={() => handleMouseEnter(i)}
+                    /* by passing i as the parameter to the handleMouseEnter function
+                     it stores the value of the star that is being hovered
+                     This allows us to highlight stars from 1 to the hovered rating
+                     when the user hovers over the 3rd star, i will be 3, so handleMouseEnter(3) is called
+                     which sets hoveredRating to 3*/
+
                     onMouseLeave={handleMouseLeave}
                     onClick={() => handleClick(i)}
                     style={{ pointerEvents: disabled ? 'none' : 'auto' }}

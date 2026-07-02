@@ -31,6 +31,17 @@ const productSlice = createSlice({
         loading: false,
         error: null,
         product: null
+        // this product variable will hold the state of the product whose details are to be displayed, it is set to null because -->
+        /*
+         in my backend the response looks like this:
+            res.status(200).json({
+                success: true,
+                product,
+            });
+   */
+        // so in the begining it is null, but as soon as the user clicks on a product -->
+        // it will be updated to the product whose details are to be displayed.
+
     },
     reducers: {
         removeErrors: (state) => {
