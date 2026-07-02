@@ -1,0 +1,76 @@
+import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+
+export const getProduct = createAsyncThunk('product/getProduct', async (_, { rejectWithValue }) => {
+    try {
+        const link = '/api/v1/products';
+        const { data } = await axios.get(link); //we had lot of properties so we destructured the entire result objrct and only took data key-property
+        //promise lifecycle actions are crrated by thunk itself
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response.data.message)
+    }
+})
+
+export const getProductDetails = createAsyncThunk('product/getProductDetails', async (id, { rejectWithValue }) => {
+    try {
+        const link = `/api/v1/product/${id}`;
+        const { data } = await axios.get(link);
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response.data.message)
+    }
+})
+
+
+const productSlice = createSlice({
+    name: 'product',
+    initialState: {
+        products: [],
+        productCount: 0,
+        loading: false,
+        error: null,
+        product: null
+    },
+    reducers: {
+        removeErrors: (state) => {
+            state.error = null
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getProduct.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+            .addCase(getProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+                state.products = action.payload.products;
+                state.productCount = action.payload.productCount;
+                // state.resultsPerPage=action.payload.resultsPerPage;
+                // state.totalPages=action.payload.totalPages;
+            })
+            .addCase(getProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || 'Something went wrong'
+                // state.products=[]
+            })
+            .addCase(getProductDetails.pending, (state) => {
+                state.loading = true;
+                state.error = null
+            })
+            .addCase(getProductDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+                state.product = action.payload.product;
+            })
+            .addCase(getProductDetails.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || 'Something went wrong'
+                state.product = null
+            })
+
+    }
+})
+export const { removeErrors } = productSlice.actions
+export default productSlice.reducer

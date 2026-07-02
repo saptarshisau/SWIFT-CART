@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../componentStyles/Rating.css';
 
 function Rating({ value, onRatingChange, disabled }) {
