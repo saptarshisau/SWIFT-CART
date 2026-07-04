@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -27,6 +27,7 @@ function Navbar() {
             navigate(`/products`)
         }
         setSearchQuery("")
+        //input field value cleared after coming back from the redirected page
     }
     return (
         <nav className="navbar">

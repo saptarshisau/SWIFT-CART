@@ -1,9 +1,19 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getProduct = createAsyncThunk('product/getProduct', async (_, { rejectWithValue }) => {
+export const getProduct = createAsyncThunk('product/getProduct', async ({ keyword, page = 1, category }, { rejectWithValue }) => {
     try {
-        const link = '/api/v1/products';
+        let link = "/api/v1/products?page=" + page;
+        if (category) {
+            link += "&category=" + category;
+        }
+        if (keyword) {
+            link += "&keyword=" + keyword;
+        }
+
+        // const link = keyword ? `/api/v1/products?keyword=${encodeURIComponent(
+        //     keyword)}&page=${page}` : `/api/v1/products?page=${page}`;
+        // const link = '/api/v1/products';
         const { data } = await axios.get(link); //we had lot of properties so we destructured the entire result objrct and only took data key-property
         //promise lifecycle actions are crrated by thunk itself
         return data;
@@ -30,7 +40,9 @@ const productSlice = createSlice({
         productCount: 0,
         loading: false,
         error: null,
-        product: null
+        product: null,
+        resultsPerPage: 4,
+        totalPages: 0
         // this product variable will hold the state of the product whose details are to be displayed, it is set to null because -->
         /*
          in my backend the response looks like this:
@@ -58,8 +70,8 @@ const productSlice = createSlice({
                 state.error = null;
                 state.products = action.payload.products;
                 state.productCount = action.payload.productCount;
-                // state.resultsPerPage=action.payload.resultsPerPage;
-                // state.totalPages=action.payload.totalPages;
+                state.resultsPerPage = action.payload.resultsPerPage;
+                state.totalPages = action.payload.totalPages;
             })
             .addCase(getProduct.rejected, (state, action) => {
                 state.loading = false;

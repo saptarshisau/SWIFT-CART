@@ -7,6 +7,7 @@ class APIFunctionality {
     search() {
         const keyword = this.queryString.keyword
             ? {
+                //$or: for multiple types of searches, but here we only search by name
                 name: {
                     $regex: this.queryString.keyword,
                     $options: "i", // case-insensitive
