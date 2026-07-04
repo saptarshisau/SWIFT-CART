@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../UserStyles/UserDashboard.css'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +34,7 @@ function UserDashboard({ user }) {
     }
     function logoutUser() {
         dispatch(logout())
-            .unwrap()
+            .unwrap() //BY REDUX TOOLKIT, we are getting a promise, we have to unwrap it to get the response, on success we are redirecting and showing a toast for success
             .then(() => {
                 toast.success('Logout Successful', { position: 'top-center', autoClose: 3000 })
                 dispatch(removeSuccess())
