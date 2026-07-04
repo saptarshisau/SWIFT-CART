@@ -42,6 +42,7 @@ function UpdateProfile() {
     useEffect(() => {
         if (error) {
             toast.error(error, { position: 'top-center', autoClose: 3000 });
+            //not error.message
             dispatch(removeErrors())
         }
     }, [dispatch, error])
