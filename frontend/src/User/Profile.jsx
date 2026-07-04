@@ -11,7 +11,7 @@ function Profile() {
     useEffect(() => {
         if (isAuthenticated === false) {
             navigate("/login")
-            //after logout it should be redirected to home page 
+            //after logout it should be redirected to login page --> ProtectedRoute handles this, but we can also handle it here, by checking if the user is authenticated or not and redirect him to the login page
 
         }
     }, [isAuthenticated])

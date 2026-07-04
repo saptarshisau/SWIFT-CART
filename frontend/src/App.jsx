@@ -9,6 +9,7 @@ import { loadUser } from './features/user/userSlice';
 import { useEffect } from 'react';
 import UserDashboard from './User/UserDashboard'
 import Profile from './User/Profile'
+import ProtectedRoute from './components/ProtectedRoute'
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ function App() {
           <Route path='/products/:keyword' element={<Products />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile' element={<ProtectedRoute element={<Profile />} />} />
         </Routes>
         {isAuthenticated && <UserDashboard user={user} />}
       </Router>
