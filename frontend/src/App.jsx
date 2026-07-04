@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import UserDashboard from './User/UserDashboard'
 import Profile from './User/Profile'
 import ProtectedRoute from './components/ProtectedRoute'
+import UpdateProfile from './User/UpdateProfile'
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch()
@@ -29,6 +30,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/profile' element={<ProtectedRoute element={<Profile />} />} />
+          <Route path='/profile/update' element={<ProtectedRoute element={<UpdateProfile />} />} />
         </Routes>
         {isAuthenticated && <UserDashboard user={user} />}
       </Router>
