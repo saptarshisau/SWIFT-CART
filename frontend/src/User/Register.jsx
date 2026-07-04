@@ -63,7 +63,7 @@ function Register() {
             dispatch(removeSuccess())
             navigate('/login')
         }
-    }, [dispatch, success])
+    }, [dispatch, success, navigate])
     return (
         <div className="form-container container">
             <div className="form-content">

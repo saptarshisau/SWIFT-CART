@@ -3,18 +3,25 @@ import User from "../models/userModel.js";
 import { sendToken } from "../utils/jwtToken.js";
 import HandleError from "../utils/handleError.js";
 import { sendEmail } from "../utils/sentEmail.js";
+import { v2 as cloudinary } from 'cloudinary';
 import crypto from 'node:crypto';
 
 
 export const registerUser = handleAsyncError(async (req, res, next) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, avatar } = req.body;
+    const myCloud = await cloudinary.uploader.upload(avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: 'scale'
+    })
     const user = await User.create({
         name,
         email,
         password,
         avatar: {
-            public_id: "sample",
-            url: "sample"
+            // public_id: "sample",
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
         }
     })
     // const token = user.getJWTToken();

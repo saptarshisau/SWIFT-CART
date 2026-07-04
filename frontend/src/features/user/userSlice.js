@@ -16,7 +16,7 @@ export const register = createAsyncThunk('user/register', async (userData, { rej
         return rejectWithValue(error.response?.data || 'Registration failed. Please try again later')
     }
 })
-/*export const login = createAsyncThunk('user/login', async ({ email, password }, { rejectWithValue }) => {
+export const login = createAsyncThunk('user/login', async ({ email, password }, { rejectWithValue }) => {
     try {
         const config = {
             headers: {
@@ -39,7 +39,7 @@ export const loadUser = createAsyncThunk('user/loadUser', async (_, { rejectWith
         return rejectWithValue(error.response?.data || 'Failed to load user profile')
     }
 })
-
+/*
 export const logout = createAsyncThunk('user/logout', async (_, { rejectWithValue }) => {
     try {
         const { data } = await axios.post('/api/v1/logout', { withCredentials: true });
@@ -151,153 +151,153 @@ const userSlice = createSlice({
 
 
         // Login cases
-        /* builder
-             .addCase(login.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(login.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.success = action.payload.success
-                 state.user = action.payload?.user || null
-                 state.isAuthenticated = Boolean(action.payload?.user)
-                 //Store in localStorage
-                 localStorage.setItem('user', JSON.stringify(state.user));
-                 localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+        builder
+            .addCase(login.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.success = action.payload.success
+                state.user = action.payload?.user || null
+                state.isAuthenticated = Boolean(action.payload?.user)
+                //Store in localStorage
+                //  localStorage.setItem('user', JSON.stringify(state.user));
+                //  localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Login failed. Please try again later'
+                state.user = null
+                state.isAuthenticated = false
+            })
+
+        // Loading User
+        builder
+            .addCase(loadUser.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(loadUser.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.user = action.payload?.user || null  //can remove these two as already taken care while login
+                state.isAuthenticated = Boolean(action.payload?.user)
+                //Store in localStorage
+                // localStorage.setItem('user', JSON.stringify(state.user));
+                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+            })
+            .addCase(loadUser.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Failed to load user profile'
+                state.user = null
+                state.isAuthenticated = false
+
+                if (action.payload?.statusCode === 401) {
+                    state.user = null;
+                    state.isAuthenticated = false;
+                    // localStorage.removeItem('user')
+                    // localStorage.removeItem('isAuthenticated')
+                }
+            })
+        /* 
+        // Logout User
+        builder
+            .addCase(logout.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(logout.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.user = null
+                state.isAuthenticated = false
+                localStorage.removeItem('user')
+                localStorage.removeItem('isAuthenticated')
  
-             })
-             .addCase(login.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Login failed. Please try again later'
-                 state.user = null
-                 state.isAuthenticated = false
-             })
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Failed to load user profile'
+            })
  
-         // Loading User
-         builder
-             .addCase(loadUser.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(loadUser.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.user = action.payload?.user || null
-                 state.isAuthenticated = Boolean(action.payload?.user)
-                 //Store in localStorage
-                 localStorage.setItem('user', JSON.stringify(state.user));
-                 localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
-             })
-             .addCase(loadUser.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Failed to load user profile'
-                 state.user = null
-                 state.isAuthenticated = false
+        // Update User Profile
+        builder
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.user = action.payload?.user || null
+                state.success = action.payload?.success
+                state.message = action.payload?.message
  
-                 if (action.payload?.statusCode === 401) {
-                     state.user = null;
-                     state.isAuthenticated = false;
-                     localStorage.removeItem('user')
-                     localStorage.removeItem('isAuthenticated')
-                 }
-             })
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Profile update failed. Please try again later'
+            })
  
-         // Logout User
-         builder
-             .addCase(logout.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(logout.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.user = null
-                 state.isAuthenticated = false
-                 localStorage.removeItem('user')
-                 localStorage.removeItem('isAuthenticated')
+        // Update User Password
+        builder
+            .addCase(updatePassword.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(updatePassword.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.success = action.payload?.success
  
-             })
-             .addCase(logout.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Failed to load user profile'
-             })
+            })
+            .addCase(updatePassword.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Password update failed'
  
-         // Update User Profile
-         builder
-             .addCase(updateProfile.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(updateProfile.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.user = action.payload?.user || null
-                 state.success = action.payload?.success
-                 state.message = action.payload?.message
+            })
  
-             })
-             .addCase(updateProfile.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Profile update failed. Please try again later'
-             })
+        // Forgot Password
+        builder
+            .addCase(forgotPassword.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(forgotPassword.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.success = action.payload?.success
+                state.message = action.payload?.message
  
-         // Update User Password
-         builder
-             .addCase(updatePassword.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(updatePassword.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.success = action.payload?.success
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Email sent failed'
  
-             })
-             .addCase(updatePassword.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Password update failed'
+            })
+        // Reset Password
+        builder
+            .addCase(resetPassword.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(resetPassword.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.success = action.payload?.success
+                state.user = null,
+                    state.isAuthenticated = false
  
-             })
+            })
+            .addCase(resetPassword.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Email sent failed'
  
-         // Forgot Password
-         builder
-             .addCase(forgotPassword.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(forgotPassword.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.success = action.payload?.success
-                 state.message = action.payload?.message
- 
-             })
-             .addCase(forgotPassword.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Email sent failed'
- 
-             })
-         // Reset Password
-         builder
-             .addCase(resetPassword.pending, (state) => {
-                 state.loading = true,
-                     state.error = null
-             })
-             .addCase(resetPassword.fulfilled, (state, action) => {
-                 state.loading = false,
-                     state.error = null
-                 state.success = action.payload?.success
-                 state.user = null,
-                     state.isAuthenticated = false
- 
-             })
-             .addCase(resetPassword.rejected, (state, action) => {
-                 state.loading = false,
-                     state.error = action.payload?.message || 'Email sent failed'
- 
-             })
-                     */
+            })
+                    */
     }
 })
 
