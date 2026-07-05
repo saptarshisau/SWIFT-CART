@@ -91,7 +91,7 @@ export const forgotPassword = createAsyncThunk('user/forgotPassword', async (ema
         return rejectWithValue(error.response?.data || { message: 'Email sent Failed' })
     }
 })
-/*
+
 export const resetPassword = createAsyncThunk('user/resetPassword', async ({ token, userData }, { rejectWithValue }) => {
     try {
         const config = {
@@ -105,7 +105,7 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async ({ tok
         return rejectWithValue(error.response?.data || { message: 'Email sent Failed' })
     }
 })
-*/
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
@@ -279,7 +279,7 @@ const userSlice = createSlice({
                     state.error = action.payload?.message || 'Email sent failed'
 
             })
-        /*  // Reset Password
+        // Reset Password
         builder
             .addCase(resetPassword.pending, (state) => {
                 state.loading = true,
@@ -291,14 +291,14 @@ const userSlice = createSlice({
                 state.success = action.payload?.success
                 state.user = null,
                     state.isAuthenticated = false
- 
+
             })
             .addCase(resetPassword.rejected, (state, action) => {
                 state.loading = false,
                     state.error = action.payload?.message || 'Email sent failed'
- 
+
             })
-                    */
+
     }
 })
 
