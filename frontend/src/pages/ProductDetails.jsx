@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../pageStyles/ProductDetails.css'
 import PageTitle from '../components/PageTitle';
 import Navbar from '../components/Navbar';
