@@ -21,7 +21,7 @@ function ProductDetails() {
     }
     const { loading, error, product, reviewSuccess, reviewLoading } = useSelector((state) => state.product);
 
-    //    const {loading:cartLoading,error:cartError,success,message,cartItems}=useSelector((state)=>state.cart);
+    const { loading: cartLoading, error: cartError, success, message, cartItems } = useSelector((state) => state.cart);
 
 
     const dispatch = useDispatch();
