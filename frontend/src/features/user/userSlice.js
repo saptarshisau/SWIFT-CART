@@ -62,7 +62,7 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (userD
         return rejectWithValue(error.response?.data || { message: 'Profile update failed. Please try again later' })
     }
 })
-/*
+
 export const updatePassword = createAsyncThunk('user/updatePassword', async (formData, { rejectWithValue }) => {
     try {
         const config = {
@@ -77,7 +77,7 @@ export const updatePassword = createAsyncThunk('user/updatePassword', async (for
     }
 })
 
-
+/*
 export const forgotPassword = createAsyncThunk('user/forgotPassword', async (email, { rejectWithValue }) => {
     try {
         const config = {
@@ -209,7 +209,7 @@ const userSlice = createSlice({
                 state.loading = true,
                     state.error = null
             })
-            .addCase(logout.fulfilled, (state, action) => {
+            .addCase(logout.fulfilled, (state) => {
                 state.loading = false,
                     state.error = null
                 state.user = null
@@ -241,63 +241,63 @@ const userSlice = createSlice({
                 state.loading = false,
                     state.error = action.payload?.message || 'Profile update failed. Please try again later'
             })
+
+        // Update User Password
+        builder
+            .addCase(updatePassword.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(updatePassword.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.error = null
+                state.success = action.payload?.success
+
+            })
+            .addCase(updatePassword.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload?.message || 'Password update failed'
+
+            })
         /* 
-             // Update User Password
-             builder
-                 .addCase(updatePassword.pending, (state) => {
-                     state.loading = true,
-                         state.error = null
-                 })
-                 .addCase(updatePassword.fulfilled, (state, action) => {
-                     state.loading = false,
-                         state.error = null
-                     state.success = action.payload?.success
-      
-                 })
-                 .addCase(updatePassword.rejected, (state, action) => {
-                     state.loading = false,
-                         state.error = action.payload?.message || 'Password update failed'
-      
-                 })
-      
-             // Forgot Password
-             builder
-                 .addCase(forgotPassword.pending, (state) => {
-                     state.loading = true,
-                         state.error = null
-                 })
-                 .addCase(forgotPassword.fulfilled, (state, action) => {
-                     state.loading = false,
-                         state.error = null
-                     state.success = action.payload?.success
-                     state.message = action.payload?.message
-      
-                 })
-                 .addCase(forgotPassword.rejected, (state, action) => {
-                     state.loading = false,
-                         state.error = action.payload?.message || 'Email sent failed'
-      
-                 })
-             // Reset Password
-             builder
-                 .addCase(resetPassword.pending, (state) => {
-                     state.loading = true,
-                         state.error = null
-                 })
-                 .addCase(resetPassword.fulfilled, (state, action) => {
-                     state.loading = false,
-                         state.error = null
-                     state.success = action.payload?.success
-                     state.user = null,
-                         state.isAuthenticated = false
-      
-                 })
-                 .addCase(resetPassword.rejected, (state, action) => {
-                     state.loading = false,
-                         state.error = action.payload?.message || 'Email sent failed'
-      
-                 })
-                         */
+            // Forgot Password
+            builder
+                .addCase(forgotPassword.pending, (state) => {
+                    state.loading = true,
+                        state.error = null
+                })
+                .addCase(forgotPassword.fulfilled, (state, action) => {
+                    state.loading = false,
+                        state.error = null
+                    state.success = action.payload?.success
+                    state.message = action.payload?.message
+     
+                })
+                .addCase(forgotPassword.rejected, (state, action) => {
+                    state.loading = false,
+                        state.error = action.payload?.message || 'Email sent failed'
+     
+                })
+            // Reset Password
+            builder
+                .addCase(resetPassword.pending, (state) => {
+                    state.loading = true,
+                        state.error = null
+                })
+                .addCase(resetPassword.fulfilled, (state, action) => {
+                    state.loading = false,
+                        state.error = null
+                    state.success = action.payload?.success
+                    state.user = null,
+                        state.isAuthenticated = false
+     
+                })
+                .addCase(resetPassword.rejected, (state, action) => {
+                    state.loading = false,
+                        state.error = action.payload?.message || 'Email sent failed'
+     
+                })
+                        */
     }
 })
 
