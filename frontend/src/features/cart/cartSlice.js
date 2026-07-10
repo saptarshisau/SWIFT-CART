@@ -62,8 +62,7 @@ const cartSlice = createSlice({
             })
             .addCase(addItemsToCart.fulfilled, (state, action) => {
                 const item = action.payload
-                //i saw that on increasing the quantity the same item was being added, neede to prevent that
-                //then came up this logic
+                //i saw that on increasing the quantity and add to cart --> the same item was being added seperately, needed to prevent that
 
                 const existingItem = state.cartItems.find((i) => i.product === item.product)
                 if (existingItem) {
