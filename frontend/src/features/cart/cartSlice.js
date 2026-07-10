@@ -36,12 +36,12 @@ const cartSlice = createSlice({
         removeMessage: (state) => {
             state.message = null
         },
-        // removeItemFromCart: (state, action) => {
-        //     state.removingId = action.payload;
-        //     state.cartItems = state.cartItems.filter(item => item.product != action.payload);
-        //     localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
-        //     state.removingId = null
-        // },
+        removeItemFromCart: (state, action) => {
+            state.removingId = action.payload;
+            state.cartItems = state.cartItems.filter(item => item.product != action.payload);
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+            state.removingId = null
+        },
         // saveShippingInfo: (state, action) => {
         //     state.shippingInfo = action.payload
         //     localStorage.setItem('shippingInfo', JSON.stringify(state.shippingInfo))
