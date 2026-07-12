@@ -25,7 +25,7 @@ function Payment() {
         key,
         amount,
         currency: 'INR',
-        name: 'ShopEasy',
+        name: 'SwiftCart',
         description: 'Ecommerce Website Payment Transaction',
         order_id: order.id,
         handler: async function (response) {
@@ -50,7 +50,7 @@ function Payment() {
         },
       };
 
-      const rzp = new Razorpay(options);
+      const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
       toast.error(error.message, { position: 'top-center', autoClose: 3000 });
