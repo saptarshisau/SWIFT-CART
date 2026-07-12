@@ -9,6 +9,9 @@ import user from "./routes/userRoutes.js";
 import order from "./routes/orderRoutes.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import dotenv from 'dotenv'
+dotenv.config({ path: 'backend/config/config.env' });
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());

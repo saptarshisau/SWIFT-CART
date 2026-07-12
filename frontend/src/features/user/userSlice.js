@@ -109,8 +109,7 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async ({ tok
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: null,
-        //localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) :
+        user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
         loading: false,
         error: null,
         success: false,
@@ -140,8 +139,8 @@ const userSlice = createSlice({
                 state.isAuthenticated = Boolean(action.payload?.user)
 
                 //Store in localStorage
-                // localStorage.setItem('user', JSON.stringify(state.user));
-                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                localStorage.setItem('user', JSON.stringify(state.user));
+                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
             })
             .addCase(register.rejected, (state, action) => {
                 state.loading = false,
@@ -164,13 +163,14 @@ const userSlice = createSlice({
                 state.user = action.payload?.user || null
                 state.isAuthenticated = Boolean(action.payload?.user)
                 //Store in localStorage
-                //  localStorage.setItem('user', JSON.stringify(state.user));
-                //  localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                localStorage.setItem('user', JSON.stringify(state.user));
+                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
 
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false,
                     state.error = action.payload?.message || 'Login failed. Please try again later'
+                //optional chaining?. is used to avoid null errors
                 state.user = null
                 state.isAuthenticated = false
             })
@@ -187,8 +187,8 @@ const userSlice = createSlice({
                 state.user = action.payload?.user || null  //can remove these two as already taken care while login
                 state.isAuthenticated = Boolean(action.payload?.user)
                 //Store in localStorage
-                // localStorage.setItem('user', JSON.stringify(state.user));
-                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                localStorage.setItem('user', JSON.stringify(state.user));
+                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.loading = false,
@@ -199,8 +199,8 @@ const userSlice = createSlice({
                 if (action.payload?.statusCode === 401) {
                     state.user = null;
                     state.isAuthenticated = false;
-                    // localStorage.removeItem('user')
-                    // localStorage.removeItem('isAuthenticated')
+                    localStorage.removeItem('user')
+                    localStorage.removeItem('isAuthenticated')
                 }
             })
 
@@ -215,8 +215,8 @@ const userSlice = createSlice({
                     state.error = null
                 state.user = null
                 state.isAuthenticated = false
-                // localStorage.removeItem('user')
-                // localStorage.removeItem('isAuthenticated')
+                localStorage.removeItem('user')
+                localStorage.removeItem('isAuthenticated')
 
             })
             .addCase(logout.rejected, (state, action) => {
