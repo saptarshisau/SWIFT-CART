@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { connectMongoDatabase } from "./config/db.js";
 // console.log(app);
 dotenv.config({ path: "backend/config/config.env" });
-import Razorpay from "razorpay";
+// import Razorpay from "razorpay";
 import { v2 as cloudinary } from 'cloudinary';
 const port = process.env.PORT || 3000;
 connectMongoDatabase();
@@ -13,10 +13,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-export const instance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET
-});
+// export const instance = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET
+// });
 
 //handle uncaught exepction errors which are synchronous
 process.on("uncaughtException", (err) => {

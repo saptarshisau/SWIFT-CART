@@ -49,7 +49,7 @@ function Rating({ value, onRatingChange, disabled }) {
                     onMouseLeave={handleMouseLeave}
                     onClick={() => handleClick(i)}
                     style={{ pointerEvents: disabled ? 'none' : 'auto' }}
-                >⭐</span>
+                >★</span>
             )
         }
         return stars;

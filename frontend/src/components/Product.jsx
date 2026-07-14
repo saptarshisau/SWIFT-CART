@@ -6,7 +6,7 @@ import Rating from './Rating';
 function Product({ product }) {
     const [rating, setRating] = useState(0);
     const handleRatingChange = (newRating) => {
-        setRating(rating)
+        setRating(newRating)
     }
     return (
         <Link to={`/product/${product._id}`} className="product_id">

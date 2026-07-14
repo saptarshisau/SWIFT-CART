@@ -10,9 +10,13 @@ import { createOrder, removeErrors, removeSuccess } from '../features/order/orde
 import { toast } from 'react-toastify'
 
 function PaymentSuccess() {
-    const [searchParams] = useSearchParams
+    const [searchParams] = useSearchParams()
     return (
-        <div>PaymentSuccess</div>
+        <>
+            <PageTitle title="Payment Success" />
+            <Navbar />
+
+        </>
     )
 }
 

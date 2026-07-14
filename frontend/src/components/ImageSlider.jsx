@@ -12,6 +12,7 @@ function ImageSlider() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+      // React supplies the latest state (index) as prev.
 
     }, 5000)
     return () => clearInterval(interval);
