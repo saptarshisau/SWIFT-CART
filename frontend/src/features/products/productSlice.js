@@ -1,19 +1,20 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getProduct = createAsyncThunk('product/getProduct', async ({ keyword, page = 1, category }, { rejectWithValue }) => {
+export const getProduct = createAsyncThunk('product/getProduct', async (_, { rejectWithValue }) => {
     try {
-        let link = "/api/v1/products?page=" + page;
-        if (category) {
-            link += "&category=" + category;
-        }
-        if (keyword) {
-            link += "&keyword=" + keyword;
-        }
+        //{ keyword, page = 1, category }
+        // let link = "/api/v1/products?page=" + page;
+        // if (category) {
+        //     link += "&category=" + category;
+        // }
+        // if (keyword) {
+        //     link += "&keyword=" + keyword;
+        // }
 
         // const link = keyword ? `/api/v1/products?keyword=${encodeURIComponent(
         //     keyword)}&page=${page}` : `/api/v1/products?page=${page}`;
-        // const link = '/api/v1/products';
+        const link = '/api/v1/products';
         const { data } = await axios.get(link); //we had lot of properties so we destructured the entire result objrct and only took data key-property
         //promise lifecycle actions are crrated by thunk itself
         return data;
@@ -29,6 +30,21 @@ export const getProductDetails = createAsyncThunk('product/getProductDetails', a
         return data;
     } catch (error) {
         return rejectWithValue(error.response.data.message)
+    }
+})
+// Submit Review
+export const createReview = createAsyncThunk('product/createReview', async ({ rating, comment, productId }, { rejectWithValue }) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put('/api/v1/review', { rating, comment, productId }, config);
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'An error occurred')
     }
 })
 
@@ -58,9 +74,14 @@ const productSlice = createSlice({
     reducers: {
         removeErrors: (state) => {
             state.error = null
+        },
+        removeSuccess: (state) => {
+            state.reviewSuccess = false
         }
     },
     extraReducers: (builder) => {
+        /*Think of builder as an object whose job is
+"Tell me which external actions you want to handle." */
         builder.addCase(getProduct.pending, (state) => {
             state.loading = true;
             state.error = null
@@ -92,8 +113,22 @@ const productSlice = createSlice({
                 state.error = action.payload || 'Something went wrong'
                 state.product = null
             })
+        builder.addCase(createReview.pending, (state) => {
+            state.reviewLoading = true;
+            state.error = null
+        })
+            .addCase(createReview.fulfilled, (state) => {
+                state.reviewLoading = false;
+                state.reviewSuccess = true;
+            })
+            .addCase(createReview.rejected, (state, action) => {
+                state.reviewLoading = false;
+                state.error = action.payload || 'Something went wrong'
+
+
+            })
 
     }
 })
-export const { removeErrors } = productSlice.actions
+export const { removeErrors, removeSuccess } = productSlice.actions //error for removeError
 export default productSlice.reducer

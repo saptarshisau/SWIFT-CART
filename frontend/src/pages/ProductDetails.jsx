@@ -9,19 +9,19 @@ import { useParams } from 'react-router-dom';
 import { createReview, getProductDetails, removeErrors, removeSuccess } from '../features/products/productSlice';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
-import { addItemsToCart, removeMessage } from '../features/cart/cartSlice';
+// import { addItemsToCart, removeMessage } from '../features/cart/cartSlice';
 
 function ProductDetails() {
     const [userRating, setUserRating] = useState(0);
     const [comment, setComment] = useState("")
     const [quantity, setQuantity] = useState(1);
-    const [selectedImage, setSelectedImage] = useState("");
+    // const [selectedImage, setSelectedImage] = useState("");
     const handleRatingChange = (newRating) => {
         setUserRating(newRating)
     }
     const { loading, error, product, reviewSuccess, reviewLoading } = useSelector((state) => state.product);
 
-    const { loading: cartLoading, error: cartError, success, message, cartItems } = useSelector((state) => state.cart);
+    // const { loading: cartLoading, error: cartError, success, message, cartItems } = useSelector((state) => state.cart);
 
 
     const dispatch = useDispatch();
@@ -45,12 +45,12 @@ function ProductDetails() {
         //   }
     }, [dispatch, error])
 
-    useEffect(() => {
-        if (success) {
-            toast.success(message, { position: 'top-center', autoClose: 3000 });
-            dispatch(removeMessage())
-        }
-    }, [dispatch, success, message])
+    // useEffect(() => {
+    //     if (success) {
+    //         toast.success(message, { position: 'top-center', autoClose: 3000 });
+    //         dispatch(removeMessage())
+    //     }
+    // }, [dispatch, success, message])
 
     const decreaseQuantity = () => {
         if (quantity <= 1) {
@@ -69,9 +69,9 @@ function ProductDetails() {
         setQuantity(qty => qty + 1)
     }
 
-    const addToCart = () => {
-        dispatch(addItemsToCart({ id, quantity }))
-    }
+    // const addToCart = () => {
+    //     dispatch(addItemsToCart({ id, quantity }))
+    // }
 
     const handleReviewSubmit = (e) => {
         e.preventDefault();
@@ -94,11 +94,11 @@ function ProductDetails() {
             dispatch(getProductDetails(id))
         }
     }, [reviewSuccess, id, dispatch])
-    useEffect(() => {
-        if (product && product.image && product.image.length > 0) {
-            setSelectedImage(product.image[0].url)
-        }
-    }, [product])
+    // useEffect(() => {
+    //     if (product && product.image && product.image.length > 0) {
+    //         setSelectedImage(product.image[0].url)
+    //     }
+    // }, [product])
     if (loading) {
         return (
             <>
@@ -126,11 +126,11 @@ function ProductDetails() {
                 <div className="product-detail-container">
                     <div className="product-image-container">
                         <img src={product.image[0].url.replace('./', '/')} alt={product.name} className='product-detail-image' />
-                        {product.image.length > 1 && (<div className="product-thumbnails">
+                        {/* {product.image.length > 1 && (<div className="product-thumbnails">
                             {product.image.map((img, index) => (
                                 <img src={img.url} alt={`Thumbnail ${index + 1}`} className='thumbnail-image' onClick={() => setSelectedImage(img.url)} />
                             ))}
-                        </div>)}
+                        </div>)} */}
                     </div>
 
                     <div className="product-info">
@@ -158,7 +158,7 @@ function ProductDetails() {
                             <input type="text" value={quantity} className='quantity-value' readOnly />
                             <button className="quantity-button" onClick={increaseQuantity}>+</button>
                         </div>
-                            <button className="add-to-cart-btn" onClick={addToCart} disabled={cartLoading}>{cartLoading ? 'Adding' : 'Add to Cart'}</button>
+                            {/* <button className="add-to-cart-btn" onClick={addToCart} disabled={cartLoading}>{cartLoading ? 'Adding' : 'Add to Cart'}</button> */}
                         </>)}
 
                         <form className="review-form" onSubmit={handleReviewSubmit}>
