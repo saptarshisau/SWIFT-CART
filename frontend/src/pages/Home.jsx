@@ -12,10 +12,10 @@ import { toast } from "react-toastify";
 
 
 function Home() {
-  const { loading, error, products, productCount } = useSelector((state) => state.product);
+  const { loading, error, products } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getProduct());//{ keyword: "" }
+    dispatch(getProduct({ keyword: "" }));//{ keyword: "" }
     //after searching we need to fetch the data again, otherelse it was only showing the searched products on Home page again 
   }, [dispatch])
   useEffect(() => {

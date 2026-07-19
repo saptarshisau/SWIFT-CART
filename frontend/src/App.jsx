@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import ProductDetails from './pages/ProductDetails'
-// import Products from './pages/Products'
+import Products from './pages/Products'
 // import Register from './User/Register'
 // import Login from './User/Login'
 // import { useSelector, useDispatch } from 'react-redux';
@@ -32,9 +32,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/product/:id' element={<ProductDetails />} />
-          {/*  <Route path='/products' element={<Products />} />
+          <Route path='/products' element={<Products />} />
           <Route path='/products/:keyword' element={<Products />} />
-          <Route path='/register' element={<Register />} />
+          {/* <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/profile' element={<ProtectedRoute element={<Profile />} />} />
           <Route path='/profile/update' element={<ProtectedRoute element={<UpdateProfile />} />} />

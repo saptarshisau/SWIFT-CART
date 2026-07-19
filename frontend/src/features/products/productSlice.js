@@ -1,20 +1,19 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getProduct = createAsyncThunk('product/getProduct', async (_, { rejectWithValue }) => {
+export const getProduct = createAsyncThunk('product/getProduct', async ({ keyword, page = 1, category }, { rejectWithValue }) => {
     try {
         //{ keyword, page = 1, category }
-        // let link = "/api/v1/products?page=" + page;
-        // if (category) {
-        //     link += "&category=" + category;
-        // }
-        // if (keyword) {
-        //     link += "&keyword=" + keyword;
-        // }
-
-        // const link = keyword ? `/api/v1/products?keyword=${encodeURIComponent(
-        //     keyword)}&page=${page}` : `/api/v1/products?page=${page}`;
-        const link = '/api/v1/products';
+        let link = "/api/v1/products?page=" + page;
+        if (category) {
+            link += "&category=" + category;
+        }
+        if (keyword) {
+            link += "&keyword=" + keyword;
+        }
+        // const link = keyword ? `/api/v1/products?keyword=${encodeURIComponent(keyword)}&page=${page}` : `/api/v1/products?page=${page}`; 
+        // const link = '/api/v1/products';
+        // const link = keyword ? `/api/v1/products?keyword=${encodeURIComponent(keyword)}` : `/api/v1/products`;
         const { data } = await axios.get(link); //we had lot of properties so we destructured the entire result objrct and only took data key-property
         //promise lifecycle actions are crrated by thunk itself
         return data;
@@ -38,6 +37,7 @@ export const createReview = createAsyncThunk('product/createReview', async ({ ra
         const config = {
             headers: {
                 'Content-Type': 'application/json'
+                // The server receives raw data. It needs to know what format that data is in. This is why we use the middleware in backend to parse the request data as jsonß
             }
         }
 
@@ -97,7 +97,7 @@ const productSlice = createSlice({
             .addCase(getProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || 'Something went wrong'
-                // state.products=[]
+                state.products = []
             })
             .addCase(getProductDetails.pending, (state) => {
                 state.loading = true;
@@ -132,3 +132,11 @@ const productSlice = createSlice({
 })
 export const { removeErrors, removeSuccess } = productSlice.actions //error for removeError
 export default productSlice.reducer
+
+
+// Why encodeURIComponent()-->
+/* Preserving Data Integrity: If a user enters text with an ampersand (e.g., Fish & Chips), a raw URL like ?search=Fish & Chips gets chopped into two broken variables: search=Fish  and  Chips. Component encoding converts it safely to Fish%20%26%20Chips.
+
+Handling Spaces: The internet standard does not permit literal blank spaces within a URI. Component encoding changes spaces into %20 so the browser can read the full string without crashing or truncating.
+
+Nesting URLs: When you need to pass a full web address as a parameter inside another web address (like a redirection link), you must encode the internal address. This prevents characters like :// and ? from breaking the primary, outer URL*/

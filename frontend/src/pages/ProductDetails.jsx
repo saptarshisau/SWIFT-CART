@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import '../pageStyles/ProductDetails.css'
 import PageTitle from '../components/PageTitle';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -115,79 +114,79 @@ function ProductDetails() {
                 <Navbar />
                 <Footer />
             </>
-            // i was trying to display the page with no product image, i used optional chaining in the jsx, 
+            // i was trying to display the page with no product image, i used optional chaining
         )
     }
     return (
         <>
             <PageTitle title={`${product.name} - Details`} />
             <Navbar />
-            <div className="product-details-container">
-                <div className="product-detail-container">
-                    <div className="product-image-container">
-                        <img src={product.image[0].url.replace('./', '/')} alt={product.name} className='product-detail-image' />
-                        {/* {product.image.length > 1 && (<div className="product-thumbnails">
+            <div className="p-[100px] max-[568px]:w-[80%] max-[568px]:mx-auto max-[568px]:p-5">
+                <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-around items-center">
+                    <div className="static md:sticky top-[40px] z-10 mb-5 w-full md:w-[500px]">
+                        <img src={product.image[0].url.replace('./', '/')} alt={product.name} className="w-full max-h-[500px] object-contain rounded-lg bg-white" />
+                        {/* {product.image.length > 1 && (<div className="mt-5">
                             {product.image.map((img, index) => (
-                                <img src={img.url} alt={`Thumbnail ${index + 1}`} className='thumbnail-image' onClick={() => setSelectedImage(img.url)} />
+                                <img src={img.url} alt={`Thumbnail ${index + 1}`} className="w-[80px] h-[80px] object-cover cursor-pointer ml-[10px] transition-transform duration-300 hover:scale-110" onClick={() => setSelectedImage(img.url)} />
                             ))}
                         </div>)} */}
                     </div>
 
-                    <div className="product-info">
-                        <h2>{product.name}</h2>
-                        <p className="product-description">{product.description}</p>
-                        <p className="product-price">Price :  {product.price}/-</p>
+                    <div className="p-5 w-full md:w-[500px]">
+                        <h2 className="text-[24px] mb-[15px] text-[#0F1111]">{product.name}</h2>
+                        <p className="text-left">{product.description}</p>
+                        <p className="text-left">Price :  {product.price}/-</p>
 
-                        <div className="product-rating">
+                        <div className="flex items-center justify-start gap-2">
                             <Rating
                                 value={product.ratings}
                                 disabled={true}
                             />
-                            <span className="productCardSpan">  ( {product.numOfReviews} {product.numOfReviews === 1 ? "Review" : "Reviews"} )</span>
+                            <span className="ml-0">  ( {product.numOfReviews} {product.numOfReviews === 1 ? "Review" : "Reviews"} )</span>
                         </div>
 
-                        <div className="stock-status">
-                            <span className={product.stock > 0 ? `in-stock` : 'out-of-stock'}>
+                        <div className="my-2.5 text-[16px]">
+                            <span className={product.stock > 0 ? `text-[#007600]` : 'text-[#B12704]'}>
                                 {product.stock > 0 ? `In Stock (${product.stock} available)` : 'Out of Stock'}
                             </span>
                         </div>
 
-                        {product.stock > 0 && (<>  <div className="quantity-controls">
-                            <span className="quantity-label">Quantity:</span>
-                            <button className="quantity-button" onClick={decreaseQuantity}>-</button>
-                            <input type="text" value={quantity} className='quantity-value' readOnly />
-                            <button className="quantity-button" onClick={increaseQuantity}>+</button>
+                        {product.stock > 0 && (<>  <div className="flex items-center my-5 gap-2.5">
+                            <span className="font-medium mr-2.5">Quantity:</span>
+                            <button className="w-[35px] h-[35px] border border-[#D5D9D9] bg-gradient-to-b from-[#F7F8FA] to-[#E7E9EC] cursor-pointer text-[18px] rounded" onClick={decreaseQuantity}>-</button>
+                            <input type="text" value={quantity} className="w-[50px] h-[35px] text-center border border-[#D5D9D9] mx-[5px] text-[16px]" readOnly />
+                            <button className="w-[35px] h-[35px] border border-[#D5D9D9] bg-gradient-to-b from-[#F7F8FA] to-[#E7E9EC] cursor-pointer text-[18px] rounded" onClick={increaseQuantity}>+</button>
                         </div>
-                            {/* <button className="add-to-cart-btn" onClick={addToCart} disabled={cartLoading}>{cartLoading ? 'Adding' : 'Add to Cart'}</button> */}
+                            {/* <button className="w-full px-5 py-3 bg-[var(--border-color)] border border-[var(--bg-primary)] rounded-lg text-[16px] cursor-pointer my-5 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={addToCart} disabled={cartLoading}>{cartLoading ? 'Adding' : 'Add to Cart'}</button> */}
                         </>)}
 
-                        <form className="review-form" onSubmit={handleReviewSubmit}>
-                            <h3>Write a Review</h3>
+                        <form className="bg-[#F8F8F8] p-5 rounded-lg mb-[30px]" onSubmit={handleReviewSubmit}>
+                            <h3 className="mb-2">Write a Review</h3>
                             <Rating
                                 value={0}
                                 disabled={false}
                                 onRatingChange={handleRatingChange}
                             />
-                            <textarea placeholder="Write your review here.." className="review-input" value={comment} onChange={(e) => setComment(e.target.value)} required></textarea>
-                            <button className="submit-review-btn" disabled={reviewLoading}>{reviewLoading ? 'Submitting....' : 'Submit Review'}</button>
+                            <textarea placeholder="Write your review here.." className="w-full min-h-[100px] p-[10px] border border-[#D5D9D9] rounded my-[10px] resize-y" value={comment} onChange={(e) => setComment(e.target.value)} required></textarea>
+                            <button className="bg-[var(--bg-primary)] text-white px-5 py-2.5 border-none rounded cursor-pointer hover:bg-[#374759]" disabled={reviewLoading}>{reviewLoading ? 'Submitting....' : 'Submit Review'}</button>
                         </form>
                     </div>
                 </div>
 
-                <div className="reviews-container">
-                    <h3>Customer Reviews</h3>
-                    {product.reviews && product.reviews.length > 0 ? (<div className="reviews-section">
+                <div className="col-span-full mt-10 pt-5 border-t border-[#E7E7E7]">
+                    <h3 className="mb-4">Customer Reviews</h3>
+                    {product.reviews && product.reviews.length > 0 ? (<div className="mt-[30px]">
                         {product.reviews.map((review, index) => (
-                            <div className="review-item" key={index}>
-                                <div className="review-header">
+                            <div className="py-5 border-b border-[#E7E7E7]" key={index}>
+                                <div className="mb-2">
                                     <Rating value={review.rating} disabled={true} />
                                 </div>
-                                <p className="review-comment">{review.comment}</p>
-                                <p className="review-name">By : {review.name}</p>
+                                <p className="my-2.5 text-[#333] text-left">{review.comment}</p>
+                                <p className="my-2.5 text-[#333] text-left font-semibold">By : {review.name}</p>
                             </div>
                         ))}
                     </div>) : (
-                        <p className="no-reviews">No reviews yet. Be the first to review this product!</p>
+                        <p className="my-2.5 text-[#333] text-left">No reviews yet. Be the first to review this product!</p>
                     )}
                 </div>
             </div>

@@ -46,7 +46,7 @@ function Register() {
         //key-value pair stored here and sent as form data 
         // console.log([...myForm.entries()]); //this shows the array of key value pairs (form data iterator)
         // for (let pair of myForm.entries()) {
-        //     console.log(pair[0] + '-' + pair[1]);
+        //     console.log(pair[0] + '-' + pair[1]); //base64-encoded 
         // }
 
         dispatch(register(myForm))

@@ -1,34 +1,34 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import SearchIcon from '@mui/icons-material/Search';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import '../componentStyles/Navbar.css';
 import '../pageStyles/Search.css'
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // const [isSearchOpen, setIsSearchOpen] = useState(false);
-    // const [searchQuery, setSearchQuery] = useState("");
-    // const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     // const { isAuthenticated } = useSelector(state => state.user)
     // const { cartItems } = useSelector(state => state.cart)
-    // const navigate = useNavigate();
-    // const handleSearchSubmit = (e) => {
-    //     e.preventDefault();
-    //     if (searchQuery.trim()) {
-    //         navigate(`/products?keyword=${encodeURIComponent(searchQuery.trim())}`)
-    //     } else {
-    //         navigate(`/products`)
-    //     }
-    //     setSearchQuery("")
-    //     //input field value cleared after coming back from the redirected page
-    // }
+    const navigate = useNavigate();
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/products?keyword=${encodeURIComponent(searchQuery.trim())}`)
+        } else {
+            navigate(`/products`)
+        }
+        setSearchQuery("")
+        //input field value cleared after coming back from the redirected page
+    }
     return (
         <nav className="fixed top-0 z-50 w-full border-b border-slate-200 bg-white shadow-sm">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -84,31 +84,46 @@ function Navbar() {
 
                 <div className="flex w-auto items-center gap-5 md:w-64">
 
-                    {/* <div className="search-container">
-                <form className={`search-form ${isSearchOpen ? 'active' : ''}`} onSubmit={handleSearchSubmit}>
-                    <input
-                        type="text"
-                        className='search-input'
-                        placeholder='Search products..'
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <button type="button" className="search-icon" onClick={toggleSearch}>
-                        <SearchIcon focusable="false" />
-                    </button>
-                </form>
-            </div>
+                    <div className="relative">
+                        <form
+                            onSubmit={handleSearchSubmit}
+                            className="flex items-center"
+                        >
+                            <input
+                                type="text"
+                                placeholder="Search products.."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className={`rounded-md border border-slate-300 px-2 py-1 outline-none transition-all duration-300
+                ${isSearchOpen
+                                        ? "w-28 opacity-100 mr-2"
+                                        : "w-0 opacity-0 p-0 border-0"
+                                    }`}
+                            />
 
-            <div className="cart-container">
+                            <button
+                                type="button"
+                                onClick={toggleSearch}
+                                className="flex items-center justify-center p-1 focus:outline-none"
+                            >
+                                <SearchIcon
+                                    focusable="false"
+                                    className="text-slate-700 hover:text-indigo-600"
+                                />
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* <div className="cart-container">
                 <Link to="/cart">
                     <ShoppingCartIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
                     <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1 text-xs font-semibold text-white">
                         {cartItems.length}
                     </span>
                 </Link>
-            </div>
+            </div> */}
 
-            {!isAuthenticated && (
+                    {/* {!isAuthenticated && (
                 <Link to="/register">
                     <PersonAddIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
                 </Link>
