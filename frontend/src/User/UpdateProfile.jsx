@@ -24,9 +24,8 @@ function UpdateProfile() {
                 setAvatar(reader.result)
             }
         }
-        reader.onerror = (error) => {
+        reader.onerror = () => {
             toast.error('Error reading file')
-
         }
         reader.readAsDataURL(e.target.files[0]);
     }
@@ -52,12 +51,12 @@ function UpdateProfile() {
             dispatch(removeSuccess());
             navigate("/profile")
         }
-    }, [dispatch, success])
+    }, [dispatch, success, navigate, message])
     useEffect(() => {
         if (user) {
             setName(user.name)
             setEmail(user.email)
-            setAvatarPreview(user.avatar?.url || './images/profile.png')
+            setAvatarPreview(user.avatar?.url || './images/profile.png') //i was using setAvatar lol, worst error ever
         }
     }, [user])
     return (
@@ -67,7 +66,7 @@ function UpdateProfile() {
                 <div className="flex justify-center items-center h-[60vh] w-full mt-[60px] md:mt-[70px] max-w-[600px] rounded-[10px] shadow-[0_8px_15px_rgba(0,0,0,0.1)] overflow-hidden p-[15px] md:p-[20px] box-border mx-auto mb-[50px]">
                     <div className="flex justify-center items-center min-h-[300px] w-full max-w-[400px] bg-[rgb(246,243,243)] p-5 transition-all duration-500 ease-in-out rounded-[10px]">
                         <form className="w-full" encType='multipart/form-data' onSubmit={updateSubmit}>
-                            <h2 className="text-center text-[var(--primary-main)] mb-5 text-2xl font-bold">Update Profile</h2>
+                            <h2 className="text-center text-[#6C5B7B] mb-5 text-2xl font-bold">Update Profile</h2>
                             <div className="flex flex-row items-center gap-[10px] mb-[15px]">
                                 <input type="file" accept="image/" className="p-2 rounded-[5px] border border-[#ccc] text-[14px] w-[80%]" name="avatar" onChange={profileImageUpdate} />
                                 <img src={avatarPreview} alt="User Profile" className="w-[50px] h-[50px] object-cover rounded-full" />
@@ -78,7 +77,7 @@ function UpdateProfile() {
                             <div className="flex flex-col mb-[15px]">
                                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" className="p-[12px] text-[14px] md:p-[14px] md:text-[16px] border border-[#ccc] rounded-[5px]" />
                             </div>
-                            <button className="w-full bg-[var(--primary-main)] text-[var(--text-primary)] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[var(--primary-dark)]">Update</button>
+                            <button className="w-full bg-[#6C5B7B] text-[#EAE7E0] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[#4E4A59]">Update</button>
                         </form>
                     </div>
                 </div>

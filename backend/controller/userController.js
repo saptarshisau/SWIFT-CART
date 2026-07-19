@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import { sendToken } from "../utils/jwtToken.js";
 import HandleError from "../utils/handleError.js";
 import { sendEmail } from "../utils/sentEmail.js";
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary'; //an object that acts as an SDK (Software Development Kit) wrapper for the Cloudinary API
 import crypto from 'node:crypto';
 
 

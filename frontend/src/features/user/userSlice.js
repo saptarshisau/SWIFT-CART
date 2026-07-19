@@ -42,7 +42,7 @@ export const loadUser = createAsyncThunk('user/loadUser', async (_, { rejectWith
 
 export const logout = createAsyncThunk('user/logout', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await axios.post('/api/v1/logout', { withCredentials: true });
+        const { data } = await axios.post('/api/v1/logout', { withCredentials: true }); //it tells to include the cookie in this req to the backend so that server can delete the cookie 
         return data
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Logout failed')

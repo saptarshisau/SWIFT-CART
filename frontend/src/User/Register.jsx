@@ -68,7 +68,7 @@ function Register() {
             <div className="flex justify-center items-center min-h-[300px] w-full max-w-[400px] bg-[rgb(246,243,243)] p-5 transition-all duration-500 ease-in-out rounded-[10px]">
                 <form className="w-full" onSubmit={registerSubmit} encType="multipart/form-data">
                     {/* Without this attribute, the web browser will not transmit the actual file data to the server; it will only send the file's name as a plain text string.*/}
-                    <h2 className="text-center text-[var(--primary-main)] mb-5 text-2xl font-bold">Sign Up</h2>
+                    <h2 className="text-center text-[#6C5B7B] mb-5 text-2xl font-bold">Sign Up</h2>
                     <div className="flex flex-col mb-[15px]">
                         <input type="text" placeholder='Username' name="name" value={name} onChange={registerDataChange} className="p-[12px] text-[14px] md:p-[14px] md:text-[16px] border border-[#ccc] rounded-[5px]" />
                     </div>
@@ -82,9 +82,9 @@ function Register() {
                         <input type="file" name="avatar" className="p-2 rounded-[5px] border border-[#ccc] text-[14px] w-[80%]" accept='image/' onChange={registerDataChange} />
                         <img src={avatarPreview} alt="Avatar Preview" className="w-[50px] h-[50px] object-cover rounded-full" />
                     </div>
-                    <button className="w-full bg-[var(--primary-main)] text-[var(--text-primary)] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[var(--primary-dark)]">{loading ? 'Signing Up' : 'Sign Up'}</button>
+                    <button className="w-full bg-[#6C5B7B] text-[#EAE7E0] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[#4E4A59]">{loading ? 'Signing Up' : 'Sign Up'}</button>
                     <p className="text-center text-[14px] text-[#555] mt-[10px]">
-                        Already have an account?<Link to="/login" className="text-[var(--border-color)] ml-[10px] hover:underline">Sign in here</Link>
+                        Already have an account?<Link to="/login" className="text-[#5C4A6F] ml-[10px] hover:underline">Sign in here</Link>
                     </p>
                 </form>
             </div>

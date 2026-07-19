@@ -50,9 +50,9 @@ function Login() {
                                 <div className="flex flex-col mb-[15px]">
                                     <input type="password" placeholder='Password' value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="p-[12px] text-[14px] md:p-[14px] md:text-[16px] border border-[#ccc] rounded-[5px]" />
                                 </div>
-                                <button className="w-full bg-[var(--primary-main)] text-[var(--text-primary)] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[var(--primary-dark)]">Sign In</button>
-                                <p className="text-center text-[14px] text-[#555] mt-[10px]">Forgot your password? <Link to="/password/forgot" className="text-[var(--border-color)] ml-[10px] hover:underline">Reset Here</Link></p>
-                                <p className="text-center text-[14px] text-[#555] mt-[10px]">Don't have an account? <Link to="/register" className="text-[var(--border-color)] ml-[10px] hover:underline">Sign up here</Link></p>
+                                <button className="w-full bg-[#6C5B7B] text-[#EAE7E0] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[#4E4A59]">Sign In</button>
+                                <p className="text-center text-[14px] text-[#555] mt-[10px]">Forgot your password? <Link to="/password/forgot" className="text-[#5C4A6F] ml-[10px] hover:underline">Reset Here</Link></p>
+                                <p className="text-center text-[14px] text-[#555] mt-[10px]">Don't have an account? <Link to="/register" className="text-[#5C4A6F] ml-[10px] hover:underline">Sign up here</Link></p>
                             </form>
                         </div>
                     </div>
