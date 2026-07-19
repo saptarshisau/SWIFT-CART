@@ -8,7 +8,7 @@ import errorMiddleware from "./middleware/error.js";
 import user from "./routes/userRoutes.js";
 import order from "./routes/orderRoutes.js";
 import cookieParser from "cookie-parser";
-// import fileUpload from "express-fileupload";
+import fileUpload from "express-fileupload";
 import dotenv from 'dotenv'
 // import payment from "./routes/paymentRoutes.js";
 dotenv.config({ path: 'backend/config/config.env' });
@@ -16,9 +16,8 @@ dotenv.config({ path: 'backend/config/config.env' });
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-// app.use(fileUpload());
+app.use(fileUpload()); //remember we are using 'Content-Type': 'multipart/form-data' in frontend, express cannot read this type of data by default (base64 is encoded)
 /*If you don't use:
-
 app.use(express.json());
 
 then in your route:

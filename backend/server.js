@@ -8,10 +8,11 @@ import { v2 as cloudinary } from 'cloudinary';
 const port = process.env.PORT || 3000;
 connectMongoDatabase();
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUDINARY_NAME, //Cloudinary username that identifies your cloud account
+  api_key: process.env.CLOUDINARY_API_KEY, //identifies your application.
+  api_secret: process.env.CLOUDINARY_API_SECRET //A private key that allows your application to authenticate and authorize its requests to the Cloudinary service
 })
+//This tells the Cloudinary SDK --> "Before I use any Cloudinary functions, here are my account credentials."
 
 // export const instance = new Razorpay({
 //   key_id: process.env.RAZORPAY_KEY_ID,
