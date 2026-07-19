@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import '../UserStyles/Form.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,7 +24,7 @@ function Register() {
                     setAvatar(reader.result)
                 }
             }
-            reader.readAsDataURL(e.target.files[0]);
+            reader.readAsDataURL(e.target.files[0]); //e.target.files is an array-like object.
         } else {
             setUser({ ...user, [e.target.name]: e.target.value })
         }
@@ -37,7 +36,7 @@ function Register() {
             toast.error('Please fill out all the required fields', { position: 'top-center', autoClose: 3000 })
             return;
         }
-        const myForm = new FormData();
+        const myForm = new FormData(); //FormData is a built-in browser object used to send form data, especially when files are involved.
         myForm.set('name', name)
         myForm.set('email', email)
         myForm.set('password', password)
@@ -65,27 +64,27 @@ function Register() {
         }
     }, [dispatch, success, navigate])
     return (
-        <div className="form-container container">
-            <div className="form-content">
-                <form className="form" onSubmit={registerSubmit} encType="multipart/form-data">
+        <div className="flex justify-center items-center h-[80vh] min-h-screen w-full max-w-[600px] rounded-[10px] shadow-[0_8px_15px_rgba(0,0,0,0.1)] overflow-hidden p-[15px] md:p-5 box-border mx-auto">
+            <div className="flex justify-center items-center min-h-[300px] w-full max-w-[400px] bg-[rgb(246,243,243)] p-5 transition-all duration-500 ease-in-out rounded-[10px]">
+                <form className="w-full" onSubmit={registerSubmit} encType="multipart/form-data">
                     {/* Without this attribute, the web browser will not transmit the actual file data to the server; it will only send the file's name as a plain text string.*/}
-                    <h2>Sign Up</h2>
-                    <div className="input-group">
-                        <input type="text" placeholder='Username' name="name" value={name} onChange={registerDataChange} />
+                    <h2 className="text-center text-[var(--primary-main)] mb-5 text-2xl font-bold">Sign Up</h2>
+                    <div className="flex flex-col mb-[15px]">
+                        <input type="text" placeholder='Username' name="name" value={name} onChange={registerDataChange} className="p-[12px] text-[14px] md:p-[14px] md:text-[16px] border border-[#ccc] rounded-[5px]" />
                     </div>
-                    <div className="input-group">
-                        <input type="email" placeholder='Email' name="email" value={email} onChange={registerDataChange} />
+                    <div className="flex flex-col mb-[15px]">
+                        <input type="email" placeholder='Email' name="email" value={email} onChange={registerDataChange} className="p-[12px] text-[14px] md:p-[14px] md:text-[16px] border border-[#ccc] rounded-[5px]" />
                     </div>
-                    <div className="input-group">
-                        <input type="password" placeholder='Password' name="password" value={password} onChange={registerDataChange} />
+                    <div className="flex flex-col mb-[15px]">
+                        <input type="password" placeholder='Password' name="password" value={password} onChange={registerDataChange} className="p-[12px] text-[14px] md:p-[14px] md:text-[16px] border border-[#ccc] rounded-[5px]" />
                     </div>
-                    <div className="input-group avatar-group">
-                        <input type="file" name="avatar" className='file-input' accept='image/' onChange={registerDataChange} />
-                        <img src={avatarPreview} alt="Avatar Preview" className='avatar' />
+                    <div className="flex flex-row items-center gap-[10px] mb-[15px]">
+                        <input type="file" name="avatar" className="p-2 rounded-[5px] border border-[#ccc] text-[14px] w-[80%]" accept='image/' onChange={registerDataChange} />
+                        <img src={avatarPreview} alt="Avatar Preview" className="w-[50px] h-[50px] object-cover rounded-full" />
                     </div>
-                    <button className="authBtn">{loading ? 'Signing Up' : 'Sign Up'}</button>
-                    <p className="form-links">
-                        Already have an account?<Link to="/login">Sign in here</Link>
+                    <button className="w-full bg-[var(--primary-main)] text-[var(--text-primary)] border-none p-[10px] text-[14px] md:p-[14px] md:text-[16px] rounded-[5px] cursor-pointer transition-colors duration-300 hover:bg-[var(--primary-dark)]">{loading ? 'Signing Up' : 'Sign Up'}</button>
+                    <p className="text-center text-[14px] text-[#555] mt-[10px]">
+                        Already have an account?<Link to="/login" className="text-[var(--border-color)] ml-[10px] hover:underline">Sign in here</Link>
                     </p>
                 </form>
             </div>

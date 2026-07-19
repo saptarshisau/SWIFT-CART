@@ -18,7 +18,10 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
   //console.log(req.query)
   const resultPerPage = 5;
-  const apiFeatures = new APIFunctionality(Product.find(), req.query).search().filter().pagination(resultPerPage)
+  const apiFeatures = new APIFunctionality(Product.find(), req.query).search().filter()
+  //dont worry if you only want to search with keyword, the filter() returns empty query object and it is not added up with search()
+  //this gives the whole query as an object of that class, not executed yet
+  //bug found as i was applying the pagination chain here, only 1 page was being dispalyed
 
   //getting filtered query before pagination
   const filteredQuery = apiFeatures.query.clone();

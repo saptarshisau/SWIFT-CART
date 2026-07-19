@@ -16,7 +16,7 @@ function Navbar() {
     const [searchQuery, setSearchQuery] = useState("");
     const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    // const { isAuthenticated } = useSelector(state => state.user)
+    const { isAuthenticated } = useSelector(state => state.user)
     // const { cartItems } = useSelector(state => state.cart)
     const navigate = useNavigate();
     const handleSearchSubmit = (e) => {
@@ -123,11 +123,11 @@ function Navbar() {
                 </Link>
             </div> */}
 
-                    {/* {!isAuthenticated && (
-                <Link to="/register">
-                    <PersonAddIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
-                </Link>
-            )} */}
+                    {!isAuthenticated && (
+                        <Link to="/register">
+                            <PersonAddIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
+                        </Link>
+                    )}
 
                     <button
                         onClick={toggleMenu}

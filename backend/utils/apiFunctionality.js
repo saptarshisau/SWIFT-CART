@@ -7,15 +7,15 @@ class APIFunctionality {
     search() {
         const keyword = this.queryString.keyword
             ? {
-                //$or: for multiple types of searches, but here we only search by name
+                //$or: for multiple types of searches such as search by category,etc , but here we only search by name
                 name: {
-                    $regex: this.queryString.keyword,
+                    $regex: this.queryString.keyword, //Find any product whose name contains "iphone".So it finds iPhone 15 ,iphone charger
                     $options: "i", // case-insensitive
                 },
             }
             : {};
 
-        this.query = this.query.find({ ...keyword });
+        this.query = this.query.find({ ...keyword }); //Product.find().find({keyword}), MONOGODB merges those find methods
 
         return this;
     }

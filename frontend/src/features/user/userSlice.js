@@ -109,11 +109,11 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async ({ tok
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+        user: null, //localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
         loading: false,
         error: null,
         success: false,
-        isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
+        isAuthenticated: false, //localStorage.getItem('isAuthenticated') === 'true',
         message: null
     },
     reducers: {
@@ -139,8 +139,8 @@ const userSlice = createSlice({
                 state.isAuthenticated = Boolean(action.payload?.user)
 
                 //Store in localStorage
-                localStorage.setItem('user', JSON.stringify(state.user));
-                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                // localStorage.setItem('user', JSON.stringify(state.user));
+                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
             })
             .addCase(register.rejected, (state, action) => {
                 state.loading = false,
@@ -163,8 +163,8 @@ const userSlice = createSlice({
                 state.user = action.payload?.user || null
                 state.isAuthenticated = Boolean(action.payload?.user)
                 //Store in localStorage
-                localStorage.setItem('user', JSON.stringify(state.user));
-                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                // localStorage.setItem('user', JSON.stringify(state.user));
+                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
 
             })
             .addCase(login.rejected, (state, action) => {
@@ -187,8 +187,8 @@ const userSlice = createSlice({
                 state.user = action.payload?.user || null  //can remove these two as already taken care while login
                 state.isAuthenticated = Boolean(action.payload?.user)
                 //Store in localStorage
-                localStorage.setItem('user', JSON.stringify(state.user));
-                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                // localStorage.setItem('user', JSON.stringify(state.user));
+                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.loading = false,
@@ -199,8 +199,8 @@ const userSlice = createSlice({
                 if (action.payload?.statusCode === 401) {
                     state.user = null;
                     state.isAuthenticated = false;
-                    localStorage.removeItem('user')
-                    localStorage.removeItem('isAuthenticated')
+                    // localStorage.removeItem('user')
+                    // localStorage.removeItem('isAuthenticated')
                 }
             })
 
@@ -304,3 +304,58 @@ const userSlice = createSlice({
 
 export const { removeErrors, removeSuccess } = userSlice.actions;
 export default userSlice.reducer;
+
+/*
+Why multipart/form-data?
+
+If you sent JSON
+
+{
+    "name":"John",
+    "avatar":"????"
+}
+
+JSON cannot upload binary files directly.
+
+Instead,
+
+the browser creates something like
+
+------Boundary
+
+Content-Disposition:
+form-data;
+name="name"
+
+Saptarshi
+
+------Boundary
+
+Content-Disposition:
+form-data;
+name="email"
+
+abc@gmail.com
+
+------Boundary
+
+Content-Disposition:
+form-data;
+name="password"
+
+123456
+
+------Boundary
+
+Content-Disposition:
+form-data;
+name="avatar"
+
+<Base64 Image>
+
+------Boundary--
+
+This format is called multipart/form-data.
+
+The backend knows how to separate each field.
+*/
