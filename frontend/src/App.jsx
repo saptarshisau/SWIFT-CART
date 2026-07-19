@@ -4,12 +4,12 @@ import ProductDetails from './pages/ProductDetails'
 import Products from './pages/Products'
 import Register from './User/Register'
 import Login from './User/Login'
-// import { useSelector, useDispatch } from 'react-redux';
-// import { loadUser } from './features/user/userSlice';
-// import { useEffect } from 'react';
-// import UserDashboard from './User/UserDashboard'
-// import Profile from './User/Profile'
-// import ProtectedRoute from './components/ProtectedRoute'
+import { useSelector, useDispatch } from 'react-redux';
+import { loadUser } from './features/user/userSlice';
+import { useEffect } from 'react';
+import UserDashboard from './User/UserDashboard'
+import Profile from './User/Profile'
+import ProtectedRoute from './components/ProtectedRoute'
 // import UpdateProfile from './User/UpdateProfile'
 // import UpdatePassword from './User/UpdatePassword'
 // import ForgotPassword from './User/ForgotPassword'
@@ -19,13 +19,13 @@ import Login from './User/Login'
 // import OrderConfirm from './Cart/OrderConfirm'
 // import Payment from './Cart/Payment'
 function App() {
-  // const { isAuthenticated, user } = useSelector(state => state.user);
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     dispatch(loadUser())
-  //   }
-  // }, [dispatch])
+  const { isAuthenticated, user } = useSelector(state => state.user);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(loadUser())
+    }
+  }, [dispatch])
   return (
     <>
       <Router>
@@ -36,8 +36,8 @@ function App() {
           <Route path='/products/:keyword' element={<Products />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          {/* <Route path='/profile' element={<ProtectedRoute element={<Profile />} />} />
-          <Route path='/profile/update' element={<ProtectedRoute element={<UpdateProfile />} />} />
+          <Route path='/profile' element={<ProtectedRoute element={<Profile />} />} />
+          {/* <Route path='/profile/update' element={<ProtectedRoute element={<UpdateProfile />} />} />
           <Route path='/password/update' element={<ProtectedRoute element={<UpdatePassword />} />} />
           <Route path="/password/forgot" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
@@ -45,9 +45,10 @@ function App() {
           <Route path='/shipping' element={<ProtectedRoute element={<Shipping />} />} />
           <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
           <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
+        </Routes>*/}
         </Routes>
-        {isAuthenticated && <UserDashboard user={user} />} */}
-        </Routes>
+        {isAuthenticated && <UserDashboard user={user} />}
+
       </Router>
     </>
   )
