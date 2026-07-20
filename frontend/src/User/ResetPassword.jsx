@@ -37,7 +37,7 @@ function ResetPassword() {
             dispatch(removeSuccess());
             navigate("/login")
         }
-    }, [dispatch, success])
+    }, [dispatch, success, navigate])
     return (
         <>
             {loading ? (<Loader />) : (<>

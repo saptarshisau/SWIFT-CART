@@ -33,7 +33,7 @@ export const login = createAsyncThunk('user/login', async ({ email, password }, 
 
 export const loadUser = createAsyncThunk('user/loadUser', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await axios.get('/api/v1/profile');
+        const { data } = await axios.get('/api/v1/profile', { withCredentials: true });
         return data
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to load user profile')
@@ -56,7 +56,7 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (userD
                 'Content-Type': 'multipart/form-data'
             }
         }
-        const { data } = await axios.put('/api/v1/profile/update', userData, config);
+        const { data } = await axios.put('/api/v1/profile/update', { withCredentials: true }, userData, config);
         return data
     } catch (error) {
         return rejectWithValue(error.response?.data || { message: 'Profile update failed. Please try again later' })
@@ -70,7 +70,7 @@ export const updatePassword = createAsyncThunk('user/updatePassword', async (for
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.put('/api/v1/password/update', formData, config);
+        const { data } = await axios.put('/api/v1/password/update', { withCredentials: true }, formData, config);
         return data
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Password update failed')
