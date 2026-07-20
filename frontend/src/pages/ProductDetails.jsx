@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { createReview, getProductDetails, removeErrors, removeSuccess } from '../features/products/productSlice';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
-// import { addItemsToCart, removeMessage } from '../features/cart/cartSlice';
+import { addItemsToCart, removeMessage } from '../features/cart/cartSlice';
 
 function ProductDetails() {
     const [userRating, setUserRating] = useState(0);
@@ -20,7 +20,7 @@ function ProductDetails() {
     }
     const { loading, error, product, reviewSuccess, reviewLoading } = useSelector((state) => state.product);
 
-    // const { loading: cartLoading, error: cartError, success, message, cartItems } = useSelector((state) => state.cart);
+    const { loading: cartLoading, error: cartError, success, message } = useSelector((state) => state.cart);
 
 
     const dispatch = useDispatch();
@@ -39,17 +39,17 @@ function ProductDetails() {
             toast.error(error.message, { position: 'top-center', autoClose: 3000 });
             dispatch(removeErrors())
         }
-        //    if(cartError){
-        //     toast.error(cartError,{position:'top-center',autoClose:3000});
-        //   }
-    }, [dispatch, error])
+        if (cartError) {
+            toast.error(cartError, { position: 'top-center', autoClose: 3000 });
+        }
+    }, [dispatch, error, cartError])
 
-    // useEffect(() => {
-    //     if (success) {
-    //         toast.success(message, { position: 'top-center', autoClose: 3000 });
-    //         dispatch(removeMessage())
-    //     }
-    // }, [dispatch, success, message])
+    useEffect(() => {
+        if (success) {
+            toast.success(message, { position: 'top-center', autoClose: 3000 });
+            dispatch(removeMessage())
+        }
+    }, [dispatch, success, message])
 
     const decreaseQuantity = () => {
         if (quantity <= 1) {
@@ -68,9 +68,9 @@ function ProductDetails() {
         setQuantity(qty => qty + 1)
     }
 
-    // const addToCart = () => {
-    //     dispatch(addItemsToCart({ id, quantity }))
-    // }
+    const addToCart = () => {
+        dispatch(addItemsToCart({ id, quantity }))
+    }
 
     const handleReviewSubmit = (e) => {
         e.preventDefault();
@@ -157,7 +157,7 @@ function ProductDetails() {
                             <input type="text" value={quantity} className="w-[50px] h-[35px] text-center border border-[#D5D9D9] mx-[5px] text-[16px]" readOnly />
                             <button className="w-[35px] h-[35px] border border-[#D5D9D9] bg-gradient-to-b from-[#F7F8FA] to-[#E7E9EC] cursor-pointer text-[18px] rounded" onClick={increaseQuantity}>+</button>
                         </div>
-                            {/* <button className="w-full px-5 py-3 bg-[#5C4A6F] border border-[#2E2E3C] rounded-lg text-[16px] cursor-pointer my-5 text-[#EAE7E0] hover:bg-[#3B3B4F]" onClick={addToCart} disabled={cartLoading}>{cartLoading ? 'Adding' : 'Add to Cart'}</button> */}
+                            <button className="w-full px-5 py-3 bg-[#5C4A6F] border border-[#2E2E3C] rounded-lg text-[16px] cursor-pointer my-5 text-[#EAE7E0] hover:bg-[#3B3B4F]" onClick={addToCart} disabled={cartLoading}>{cartLoading ? 'Adding' : 'Add to Cart'}</button>
                         </>)}
 
                         <form className="bg-[#F8F8F8] p-5 rounded-lg mb-[30px]" onSubmit={handleReviewSubmit}>

@@ -17,7 +17,7 @@ function Navbar() {
     const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const { isAuthenticated } = useSelector(state => state.user)
-    // const { cartItems } = useSelector(state => state.cart)
+    const { cartItems } = useSelector(state => state.cart)
     const navigate = useNavigate();
     const handleSearchSubmit = (e) => {
         e.preventDefault();
@@ -114,14 +114,14 @@ function Navbar() {
                         </form>
                     </div>
 
-                    {/* <div className="cart-container">
-                <Link to="/cart">
-                    <ShoppingCartIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
-                    <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1 text-xs font-semibold text-white">
-                        {cartItems.length}
-                    </span>
-                </Link>
-            </div> */}
+                    <div className="cart-container">
+                        <Link to="/cart">
+                            <ShoppingCartIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
+                            <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1 text-xs font-semibold text-white">
+                                {cartItems.length}
+                            </span>
+                        </Link>
+                    </div>
 
                     {!isAuthenticated && (
                         <Link to="/register">

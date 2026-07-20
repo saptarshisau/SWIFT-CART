@@ -7,12 +7,13 @@ import {
     FiUser,
     FiLogOut,
     FiLayout,
+    FiShoppingCart,
     FiChevronRight,
 } from 'react-icons/fi';
 import { logout, removeSuccess } from '../features/user/userSlice';
 
 function UserDashboard({ user }) {
-    // const { cartItems } = useSelector(state => state.cart)
+    const { cartItems } = useSelector(state => state.cart)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -34,12 +35,12 @@ function UserDashboard({ user }) {
             icon: <FiUser size={18} />,
             funcName: profile,
         },
-        // {
-        //     name: `Cart(${cartItems.length})`,
-        //     icon: <FiShoppingCart size={18} />,
-        //     funcName: myCart,
-        //     isCart: true,
-        // },
+        {
+            name: `Cart(${cartItems.length})`,
+            icon: <FiShoppingCart size={18} />,
+            funcName: myCart,
+            isCart: true,
+        },
         {
             name: 'Logout',
             icon: <FiLogOut size={18} />,
@@ -100,8 +101,8 @@ function UserDashboard({ user }) {
             {/* Backdrop */}
             <div
                 className={`fixed inset-0 z-[999] bg-black/30 backdrop-blur-[2px] transition-all duration-300 ${menuVisible
-                        ? 'visible opacity-100'
-                        : 'invisible opacity-0'
+                    ? 'visible opacity-100'
+                    : 'invisible opacity-0'
                     }`}
                 onClick={toggleMenu}
             ></div>
@@ -136,8 +137,8 @@ function UserDashboard({ user }) {
                 {/* Dropdown */}
                 <div
                     className={`fixed top-[72px] right-8 z-[1000] w-64 origin-top-right overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl transition-all duration-200 max-[780px]:right-3 ${menuVisible
-                            ? 'visible scale-100 opacity-100'
-                            : 'pointer-events-none invisible scale-95 opacity-0'
+                        ? 'visible scale-100 opacity-100'
+                        : 'pointer-events-none invisible scale-95 opacity-0'
                         }`}
                 >
                     {/* User Header */}
@@ -158,8 +159,8 @@ function UserDashboard({ user }) {
                                 key={item.name}
                                 onClick={item.funcName}
                                 className={`flex w-full items-center justify-between px-5 py-3 text-left transition-all duration-200 ${item.danger
-                                        ? 'text-red-600 hover:bg-red-50'
-                                        : 'text-slate-700 hover:bg-slate-100'
+                                    ? 'text-red-600 hover:bg-red-50'
+                                    : 'text-slate-700 hover:bg-slate-100'
                                     }`}
                             >
                                 <div className="flex items-center gap-3">

@@ -62,7 +62,7 @@ const cartSlice = createSlice({
             })
             .addCase(addItemsToCart.fulfilled, (state, action) => {
                 const item = action.payload
-                //i saw that on increasing the quantity and add to cart --> the same item was being added seperately, needed to prevent that
+                //i saw that on increasing the quantity and add to cart --> the same item was being added seperately in the cartItems array, needed to prevent that
 
                 const existingItem = state.cartItems.find((i) => i.product === item.product)
                 if (existingItem) {
@@ -76,7 +76,7 @@ const cartSlice = createSlice({
                 state.loading = false,
                     state.error = null,
                     state.success = true
-                localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+                localStorage.setItem('cartItems', JSON.stringify(state.cartItems)) //coz as soon as i refreshed, the items added reset to 1
             })
             .addCase(addItemsToCart.rejected, (state, action) => {
                 state.loading = false,

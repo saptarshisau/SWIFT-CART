@@ -55,7 +55,7 @@ function CartItem({ item }) {
       toast.success(message, {
         position: "top-center",
         autoClose: 3000,
-        toastId: "cart-update",
+        toastId: "cart-update", //toast was showing twice so added this
       });
       dispatch(removeMessage());
     }
