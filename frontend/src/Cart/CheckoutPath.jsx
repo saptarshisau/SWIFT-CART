@@ -16,7 +16,7 @@ function CheckoutPath({ activePath }) {
         }
     ]
     return (
-        <div className="flex justify-center items-start gap-2 md:gap-8 py-8 md:py-12 px-4 border-b border-gray-200 max-w-[1000px] mx-auto w-full mb-8">
+        <div className="flex justify-center items-start gap-2 md:gap-8 mt-16 md:mt-24 py-8 md:py-12 px-4 border-b border-gray-200 max-w-[1000px] mx-auto w-full mb-8">
             {path.map((item, index) => {
                 const isPast = index < activePath;
                 const isActive = index === activePath;
