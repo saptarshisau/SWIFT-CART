@@ -1,4 +1,3 @@
-import '../CartStyles/Payment.css'
 import PageTitle from '../components/PageTitle';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -62,9 +61,9 @@ function Payment() {
       <PageTitle title="Payment Processing" />
       <Navbar />
       <CheckoutPath activePath={2} />
-      <div className="payment-container">
-        <Link to="/order/confirm" className='payment-go-back'>Go Back</Link>
-        <button className="payment-btn" onClick={() => completePayment(orderItem.total)}>Pay ({orderItem.total})/-</button>
+      <div className="flex flex-col md:flex-row justify-center items-center min-h-[40vh] gap-4 md:gap-8 my-10 px-6 w-full max-w-[600px] mx-auto mb-20">
+        <Link to="/order/confirm" className="w-full md:w-auto px-8 py-4 text-base md:text-lg rounded-xl transition-all duration-300 font-semibold border-2 border-gray-300 text-gray-600 bg-gray-50 hover:bg-gray-600 hover:text-white hover:border-gray-600 shadow-sm hover:shadow-md text-center">Go Back</Link>
+        <button className="w-full md:w-auto px-10 py-4 text-base md:text-lg rounded-xl transition-all duration-300 font-bold border-none text-white bg-[#3B3B4F] hover:bg-[#2E2E3C] shadow-lg hover:shadow-xl hover:-translate-y-1 text-center" onClick={() => completePayment(orderItem.total)}>Pay ({orderItem.total})/-</button>
       </div>
       <Footer />
     </>

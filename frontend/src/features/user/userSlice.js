@@ -109,11 +109,11 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async ({ tok
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: null, //localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+        user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null, //null, 
         loading: false,
         error: null,
         success: false,
-        isAuthenticated: false, //localStorage.getItem('isAuthenticated') === 'true',
+        isAuthenticated: localStorage.getItem('isAuthenticated') === 'true', //false,
         message: null
     },
     reducers: {
@@ -139,8 +139,8 @@ const userSlice = createSlice({
                 state.isAuthenticated = Boolean(action.payload?.user)
 
                 //Store in localStorage
-                // localStorage.setItem('user', JSON.stringify(state.user));
-                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                localStorage.setItem('user', JSON.stringify(state.user));
+                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
             })
             .addCase(register.rejected, (state, action) => {
                 state.loading = false,
@@ -163,8 +163,8 @@ const userSlice = createSlice({
                 state.user = action.payload?.user || null
                 state.isAuthenticated = Boolean(action.payload?.user)
                 //Store in localStorage
-                // localStorage.setItem('user', JSON.stringify(state.user));
-                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                localStorage.setItem('user', JSON.stringify(state.user));
+                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
 
             })
             .addCase(login.rejected, (state, action) => {
@@ -187,8 +187,8 @@ const userSlice = createSlice({
                 state.user = action.payload?.user || null  //can remove these two as already taken care while login
                 state.isAuthenticated = Boolean(action.payload?.user)
                 //Store in localStorage
-                // localStorage.setItem('user', JSON.stringify(state.user));
-                // localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
+                localStorage.setItem('user', JSON.stringify(state.user));
+                localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.loading = false,
@@ -215,8 +215,10 @@ const userSlice = createSlice({
                     state.error = null
                 state.user = null
                 state.isAuthenticated = false
-                // localStorage.removeItem('user')
-                // localStorage.removeItem('isAuthenticated')
+                //but when will this local storage get deleted? coz the cookies will eventually be deleted after logout, but user info is still in local storage, so after refresh will it show logged in? that would be bad
+                //exactly solved here
+                localStorage.removeItem('user')
+                localStorage.removeItem('isAuthenticated')
 
             })
             .addCase(logout.rejected, (state, action) => {

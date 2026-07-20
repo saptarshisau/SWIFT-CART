@@ -17,7 +17,7 @@ import ResetPassword from './User/ResetPassword'
 import Cart from './Cart/Cart'
 import Shipping from './Cart/Shipping'
 import OrderConfirm from './Cart/OrderConfirm'
-// import Payment from './Cart/Payment'
+import Payment from './Cart/Payment'
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch()
@@ -44,8 +44,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path='/shipping' element={<ProtectedRoute element={<Shipping />} />} />
           <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
-          {/*  <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
-        </Routes>*/}
+          <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
+
         </Routes>
         {isAuthenticated && <UserDashboard user={user} />}
 
@@ -59,4 +59,9 @@ export default App
 /*
 i dont get why that authentication toast is being shown after logout? where should i check this?
 it was because i was not using the if statement, it tried to dispatch loaduser, that is the reason but remember it caused the first render dispute as the cookie already had the logged user stored but the dasboard was unable to show the the drop down, how totackle this?
+*/
+// SOLVED BY LOCAL STORAGE
+
+/*
+i have a doubt, see yet i have not used localStorage, although the backend is creating cookies on my login, i get that, after login --> then home page and then refresh, still i can see that i am still logged in with that exct same user which is great, but i havent used localStorage yet, how is this possible?
 */
