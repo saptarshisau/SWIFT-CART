@@ -55,3 +55,8 @@ function App() {
 }
 
 export default App
+
+/*
+i dont get why that authentication toast is being shown after logout? where should i check this?
+it was because i was not using the if statement, it tried to dispatch loaduser, that is the reason but remember it caused the first render dispute as the cookie already had the logged user stored but the dasboard was unable to show the the drop down, how totackle this?
+*/
