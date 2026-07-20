@@ -2,7 +2,7 @@ import app from "./app.js";
 import dotenv from "dotenv";
 import { connectMongoDatabase } from "./config/db.js";
 // console.log(app);
-dotenv.config({ path: "backend/config/config.env" });
+dotenv.config({ path: "backend/config/.env" });
 import Razorpay from "razorpay";
 import { v2 as cloudinary } from 'cloudinary';
 const port = process.env.PORT || 3000;
@@ -15,18 +15,23 @@ cloudinary.config({
 })
 //This tells the Cloudinary SDK --> "Before I use any Cloudinary functions, here are my account credentials."
 
-export const instance = new Razorpay({
-  //The SDK remembers these credentials inside instance.
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET
-});
-
 //handle uncaught exepction errors which are synchronous
 process.on("uncaughtException", (err) => {
   console.log(`Error : ${err}`);
   console.log(`Shutting down the server due to uncaught exception`);
   process.exit(1);
 })
+
+// console.log("KEY_ID:", process.env.RAZORPAY_API_KEY);
+// console.log("KEY_SECRET:", process.env.RAZORPAY_API_SECRET);
+//error--> undefined key_id -->  key name wrong 
+
+export const instance = new Razorpay({
+  //The SDK remembers these credentials inside instance.
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_API_SECRET
+})
+
 const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

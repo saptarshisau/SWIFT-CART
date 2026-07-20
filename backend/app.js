@@ -12,8 +12,6 @@ import fileUpload from "express-fileupload";
 import dotenv from 'dotenv'
 import payment from "./routes/paymentRoutes.js"; //creates/populates process.env
 
-dotenv.config({ path: 'backend/config/config.env' });
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -39,5 +37,6 @@ app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use(errorMiddleware)
+dotenv.config({ path: 'backend/config/.env' });
 export default app;
 //esm module system

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import '../CartStyles/PaymentSuccess.css'
 import { Link, useSearchParams } from 'react-router-dom';
 import PageTitle from '../components/PageTitle'
@@ -55,7 +55,7 @@ function PaymentSuccess() {
             }
         }
         createOrderData()
-    }, []);
+    }, [cartItems, dispatch, reference, shippingInfo.address, shippingInfo.city, shippingInfo.country, shippingInfo.phoneNumber, shippingInfo.pinCode, shippingInfo.state]);
     useEffect(() => {
         if (success) {
             toast.success('Order Placed', { position: 'top-center', autoClose: 3000 });
