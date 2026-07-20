@@ -13,6 +13,8 @@ function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const redirect = new URLSearchParams(location.search).get("redirect") || "/"
+    // two case : 1. for redirection from cart, 2: register--> direct login after sign up
+
     const loginSubmit = (e) => {
         e.preventDefault();
         dispatch(login({ email: loginEmail, password: loginPassword }))

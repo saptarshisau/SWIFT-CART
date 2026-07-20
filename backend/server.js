@@ -3,10 +3,11 @@ import dotenv from "dotenv";
 import { connectMongoDatabase } from "./config/db.js";
 // console.log(app);
 dotenv.config({ path: "backend/config/config.env" });
-// import Razorpay from "razorpay";
+import Razorpay from "razorpay";
 import { v2 as cloudinary } from 'cloudinary';
 const port = process.env.PORT || 3000;
 connectMongoDatabase();
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME, //Cloudinary username that identifies your cloud account
   api_key: process.env.CLOUDINARY_API_KEY, //identifies your application.
@@ -14,10 +15,11 @@ cloudinary.config({
 })
 //This tells the Cloudinary SDK --> "Before I use any Cloudinary functions, here are my account credentials."
 
-// export const instance = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_KEY_SECRET
-// });
+export const instance = new Razorpay({
+  //The SDK remembers these credentials inside instance.
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET
+});
 
 //handle uncaught exepction errors which are synchronous
 process.on("uncaughtException", (err) => {
@@ -38,3 +40,57 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   })
 });
+
+
+/*
+HTTP Basic Authentication is already a standard protocol.
+(remember cloudinary used HMAC+SHA signature)
+Your Backend
+────────────────────────────
+
+key_id = rzp_test_abc123
+secret = secretXYZ
+
+        │
+        ▼
+Combine
+
+rzp_test_abc123:secretXYZ
+
+        │
+        ▼
+Base64 Encode
+
+cnpwX3Rlc3RfYWJjMTIzOnNlY3JldFhZWg==
+
+        │
+        ▼
+Authorization: Basic <encoded string>
+
+────────────────────────────
+        HTTPS
+────────────────────────────
+
+        │
+        ▼
+
+Razorpay Server
+
+Decode Base64
+
+↓
+
+rzp_test_abc123:secretXYZ
+
+↓
+
+Find account by Key ID
+
+↓
+
+Compare Secret Key
+
+↓
+
+✓ Authenticated
+*/

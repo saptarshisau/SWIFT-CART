@@ -22,9 +22,9 @@ function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch()
   useEffect(() => {
-    // if (isAuthenticated) {
-    dispatch(loadUser())
-    // }
+    if (isAuthenticated) {
+      dispatch(loadUser())
+    }
   }, [dispatch, isAuthenticated])
   return (
     <>
@@ -45,7 +45,19 @@ function App() {
           <Route path='/shipping' element={<ProtectedRoute element={<Shipping />} />} />
           <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
           <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
-
+          {/* <Route path="/paymentSuccess" element={<ProtectedRoute element={<PaymentSuccess/>}/>}/> */}
+          {/*<Route path="/orders/user" element={<ProtectedRoute element={<MyOrders/>}/>}/>
+      <Route path="/order/:orderId" element={<ProtectedRoute element={<OrderDetails/>}/>}/>
+      /* Admin Routes 
+      <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard/>} adminOnly={true}/>}/>
+      <Route path="/admin/products" element={<ProtectedRoute element={<ProductsList/>} adminOnly={true}/>}/>
+      <Route path="/admin/product/create" element={<ProtectedRoute element={<CreateProduct/>} adminOnly={true}/>}/>
+      <Route path="/admin/product/:updateId" element={<ProtectedRoute element={<UpdateProduct/>} adminOnly={true}/>}/>
+      <Route path="/admin/users" element={<ProtectedRoute element={<UsersList/>} adminOnly={true}/>}/>
+      <Route path="/admin/user/:userId" element={<ProtectedRoute element={<UpdateRole/>} adminOnly={true}/>}/>
+      <Route path="/admin/orders" element={<ProtectedRoute element={<OrdersList/>} adminOnly={true}/>}/>
+      <Route path="/admin/order/:orderId" element={<ProtectedRoute element={<UpdateOrder/>} adminOnly={true}/>}/>
+      <Route path="/admin/reviews" element={<ProtectedRoute element={<ReviewsList/>} adminOnly={true}/>}/>*/}
         </Routes>
         {isAuthenticated && <UserDashboard user={user} />}
 

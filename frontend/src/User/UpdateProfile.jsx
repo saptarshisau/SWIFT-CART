@@ -49,6 +49,7 @@ function UpdateProfile() {
         if (success) {
             toast.success(message, { position: 'top-center', autoClose: 3000 });
             dispatch(removeSuccess());
+            // not removing Success : we come to edit profile --> already it is success===true, so directly navigated to profile page
             navigate("/profile")
         }
     }, [dispatch, success, navigate, message])

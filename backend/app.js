@@ -10,7 +10,8 @@ import order from "./routes/orderRoutes.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import dotenv from 'dotenv'
-// import payment from "./routes/paymentRoutes.js";
+import payment from "./routes/paymentRoutes.js"; //creates/populates process.env
+
 dotenv.config({ path: 'backend/config/config.env' });
 
 const app = express();
@@ -36,7 +37,7 @@ express.json() parses that JSON string using JSON.parse()
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
-// app.use("/api/v1", payment);
+app.use("/api/v1", payment);
 app.use(errorMiddleware)
 export default app;
 //esm module system

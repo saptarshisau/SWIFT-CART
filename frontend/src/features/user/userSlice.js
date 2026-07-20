@@ -199,8 +199,9 @@ const userSlice = createSlice({
                 if (action.payload?.statusCode === 401) {
                     state.user = null;
                     state.isAuthenticated = false;
-                    // localStorage.removeItem('user')
-                    // localStorage.removeItem('isAuthenticated')
+                    localStorage.removeItem('user')
+                    localStorage.removeItem('isAuthenticated')
+                    //chack the last space of this page
                 }
             })
 
@@ -308,6 +309,7 @@ export const { removeErrors, removeSuccess } = userSlice.actions;
 export default userSlice.reducer;
 
 /*
+1.
 Why multipart/form-data?
 
 If you sent JSON
@@ -360,4 +362,123 @@ name="avatar"
 This format is called multipart/form-data.
 
 The backend knows how to separate each field.
+*/
+
+
+
+/*
+2.
+but i have already stored user and isAuth in local storage and i have started to us the is statement for dispatch(loadUser) in app.jsx, why is it still needed?
+
+Scenario 1: Everything is normal
+
+Login:
+
+Login
+↓
+
+Backend creates cookie
+
+↓
+
+Redux
+user = Saptarshi
+isAuthenticated = true
+
+↓
+
+localStorage
+user = Saptarshi
+isAuthenticated = true
+
+Refresh:
+
+Redux initializes from localStorage:
+
+user = Saptarshi
+isAuthenticated = true
+
+App.jsx:
+
+useEffect(() => {
+    if (isAuthenticated) {
+        dispatch(loadUser());
+    }
+}, [isAuthenticated]);
+
+Since isAuthenticated is true, loadUser() runs.
+
+Backend sees the cookie and returns the user.
+
+Everything stays synchronized.
+
+Scenario 2: Cookie disappears
+
+Now imagine the user doesn't click Logout.
+
+Instead:
+
+the JWT expires,
+or they manually delete cookies,
+or the server invalidates the session.
+
+localStorage still contains:
+
+user = Saptarshi
+isAuthenticated = true
+
+because localStorage never expires automatically.
+
+Next refresh:
+
+Redux becomes
+
+user = Saptarshi
+isAuthenticated = true
+
+because of localStorage.
+
+App.jsx says:
+
+if (isAuthenticated) {
+    dispatch(loadUser());
+}
+
+So loadUser() runs.
+
+Backend checks:
+
+Cookie?
+
+Answer:
+
+❌ No
+
+Returns:
+
+401 Unauthorized
+
+Now what should happen?
+
+You must clear:
+
+state.user = null;
+state.isAuthenticated = false;
+
+localStorage.removeItem("user");
+localStorage.removeItem("isAuthenticated");
+
+Otherwise localStorage still says:
+
+isAuthenticated = true
+
+On the next refresh, you'll repeat the same incorrect cycle.
+
+That's why the 401 handler exists
+
+It's essentially saying:
+
+"I trusted localStorage, but the backend proved it's wrong."
+
+So the frontend corrects itself.
 */
