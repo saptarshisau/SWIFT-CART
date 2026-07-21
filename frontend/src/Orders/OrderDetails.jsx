@@ -59,7 +59,7 @@ function OrderDetails() {
                     {orderItems.map((item, index) => (
                       <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                         <td className="p-4 md:p-5 border-b border-gray-100">
-                          <img src={item.image} alt={item.name} className="w-[60px] h-[60px] object-cover rounded-lg shadow-sm" />
+                          <img src={item.image.replace('./', '/')} alt={item.name} className="w-[60px] h-[60px] object-cover rounded-lg shadow-sm" />
                         </td>
                         <td className="p-4 md:p-5 text-gray-700 font-medium border-b border-gray-100 text-sm md:text-base whitespace-nowrap">{item.name}</td>
                         <td className="p-4 md:p-5 text-gray-700 font-medium border-b border-gray-100 text-sm md:text-base whitespace-nowrap">{item.quantity}</td>

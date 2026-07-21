@@ -42,6 +42,7 @@ function ProductsList() {
             </div>
         )
     }
+    console.log(products);
     return (
         <>
             {loading ? (<Loader />) : (<>
@@ -49,7 +50,7 @@ function ProductsList() {
                 <PageTitle title="All Products" />
                 <div className="p-5 bg-gray-50/50 rounded-2xl shadow-md min-h-screen mt-[90px] max-w-[1200px] mx-auto mb-10">
                     <h1 className="text-2xl md:text-3xl mb-8 text-[#3B3B4F] font-bold">All Products</h1>
-                    
+
                     <div className="w-full bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200">
                         <div className="overflow-x-auto">
                             <table className="w-full border-collapse text-left">
@@ -71,7 +72,7 @@ function ProductsList() {
                                         <tr key={product._id} className="even:bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
                                             <td className="p-4 border-b border-gray-100 text-gray-700 whitespace-nowrap">{index + 1}</td>
                                             <td className="p-4 border-b border-gray-100 whitespace-nowrap">
-                                                <img src={product.image[0].url} alt={product.name} className='w-[70px] h-[70px] object-cover rounded-md shadow-sm' />
+                                                <img src={product.image[0].url.replace('./', '/')} alt={product.name} className='w-[70px] h-[70px] object-cover rounded-md shadow-sm' />
                                             </td>
                                             <td className="p-4 border-b border-gray-100 text-gray-800 font-medium whitespace-nowrap">{product.name}</td>
                                             <td className="p-4 border-b border-gray-100 text-gray-800 font-bold whitespace-nowrap">{product.price}/-</td>
