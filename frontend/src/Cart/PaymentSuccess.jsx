@@ -13,7 +13,7 @@ import { clearCart } from '../features/cart/cartSlice';
 function PaymentSuccess() {
     const [searchParams] = useSearchParams()
     const reference = searchParams.get('reference');
-    const { cartItems, shippingInfo } = useSelector(state => state.cart);
+    const { cartItems, shippingInfo } = useSelector(state => state.cart); //though we had them in localStorage
     const { loading, success, error } = useSelector(state => state.order);
     const dispatch = useDispatch();
 

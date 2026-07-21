@@ -20,6 +20,7 @@ function Payment() {
       const { data: orderData } = await axios.post('/api/v1/payment/process', { amount });
       const { order } = orderData
 
+      //These are configuration options for the Razorpay Checkout SDK.
       const options = {
         key,
         amount,
@@ -27,12 +28,16 @@ function Payment() {
         name: 'SwiftCart',
         description: 'Ecommerce Website Payment Transaction',
         order_id: order.id,
+
+        //using callback we would have been redirected to the backend route 
+        //only on payment success
         handler: async function (response) {
           const { data } = await axios.post('/api/v1/paymentVerification', {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature
           })
+          // intruder could have redirected us to somewhere else if we didn't control this handling, using devtools
           if (data.success) {
             navigate(`/paymentSuccess?reference=${data.reference}`)
           } else {
@@ -48,7 +53,12 @@ function Payment() {
           color: '#3399cc'
         },
       };
-
+      /*
+      The Backend Order: Your server creates an order using the backend SDK and sends the order_id to the frontend.
+      The Frontend Options: You pass that order_id, your public API key, currency, design themes, and customer details into the frontend options object.
+      The Initialization: You pass those options into new window.Razorpay(options) to render the credit card, UPI, and net banking payment UI.
+      */
+      // this is browser sdk, in backend it was a different sdk
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
@@ -71,3 +81,77 @@ function Payment() {
 }
 
 export default Payment
+
+
+/*
+Now suppose the user
+
+presses Esc
+closes the browser
+loses internet
+changes their mind
+
+No payment happens.
+
+Step 3
+
+Nothing changes.
+
+Inside Razorpay it still looks like
+
+Order ID : order_A1B2C3
+
+Status : created
+
+No money was deducted.
+
+No payment ID exists.
+
+No signature exists.
+
+Does Razorpay delete it?
+
+Generally no.
+
+It remains as an unpaid order in Razorpay's records. It serves as an audit trail of payment attempts.
+
+Think of it like this.
+
+You create an invoice.
+
+Invoice #123
+
+Amount : ₹2000
+
+Status : Unpaid
+
+If the customer never pays,
+
+does the invoice disappear?
+
+No.
+
+It simply stays
+
+UNPAID
+
+Razorpay orders behave similarly.
+
+Does this affect your application?
+
+Not unless you save something.
+
+Notice your backend currently does
+
+const order = await instance.orders.create(...)
+
+res.json(order)
+
+You never store that order in MongoDB.
+
+So if the customer closes the popup,
+
+your database doesn't even know anything happened.
+
+Only Razorpay has that order.
+*/

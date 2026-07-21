@@ -18,6 +18,7 @@ import Cart from './Cart/Cart'
 import Shipping from './Cart/Shipping'
 import OrderConfirm from './Cart/OrderConfirm'
 import Payment from './Cart/Payment'
+import PaymentSuccess from './Cart/PaymentSuccess'
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch()
@@ -45,9 +46,9 @@ function App() {
           <Route path='/shipping' element={<ProtectedRoute element={<Shipping />} />} />
           <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
           <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
-          {/* <Route path="/paymentSuccess" element={<ProtectedRoute element={<PaymentSuccess/>}/>}/> */}
-          {/*<Route path="/orders/user" element={<ProtectedRoute element={<MyOrders/>}/>}/>
-      <Route path="/order/:orderId" element={<ProtectedRoute element={<OrderDetails/>}/>}/>
+          <Route path="/paymentSuccess" element={<ProtectedRoute element={<PaymentSuccess />} />} />
+          <Route path="/orders/user" element={<ProtectedRoute element={<MyOrders />} />} />
+          {/* <Route path="/order/:orderId" element={<ProtectedRoute element={<OrderDetails/>}/>}/>
       /* Admin Routes 
       <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard/>} adminOnly={true}/>}/>
       <Route path="/admin/products" element={<ProtectedRoute element={<ProductsList/>} adminOnly={true}/>}/>
