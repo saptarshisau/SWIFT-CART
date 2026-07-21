@@ -21,6 +21,8 @@ import Payment from './Cart/Payment'
 import PaymentSuccess from './Cart/PaymentSuccess'
 import MyOrders from './Orders/MyOrders'
 import OrderDetails from './Orders/OrderDetails'
+import Dashboard from './Admin/Dashboard'
+import ProductsList from './Admin/ProductsList'
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch()
@@ -51,11 +53,11 @@ function App() {
           <Route path="/paymentSuccess" element={<ProtectedRoute element={<PaymentSuccess />} />} />
           <Route path="/orders/user" element={<ProtectedRoute element={<MyOrders />} />} />
           <Route path="/order/:orderId" element={<ProtectedRoute element={<OrderDetails />} />} />
-          {/*/* Admin Routes 
-      <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard/>} adminOnly={true}/>}/>
-      <Route path="/admin/products" element={<ProtectedRoute element={<ProductsList/>} adminOnly={true}/>}/>
-      <Route path="/admin/product/create" element={<ProtectedRoute element={<CreateProduct/>} adminOnly={true}/>}/>
-      <Route path="/admin/product/:updateId" element={<ProtectedRoute element={<UpdateProduct/>} adminOnly={true}/>}/>
+          {/* Admin Routes */}
+          <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard />} adminOnly={true} />} />
+          <Route path="/admin/products" element={<ProtectedRoute element={<ProductsList />} adminOnly={true} />} />
+          {/* <Route path="/admin/product/create" element={<ProtectedRoute element={<CreateProduct />} adminOnly={true} />} /> */}
+          {/* <Route path="/admin/product/:updateId" element={<ProtectedRoute element={<UpdateProduct/>} adminOnly={true}/>}/>
       <Route path="/admin/users" element={<ProtectedRoute element={<UsersList/>} adminOnly={true}/>}/>
       <Route path="/admin/user/:userId" element={<ProtectedRoute element={<UpdateRole/>} adminOnly={true}/>}/>
       <Route path="/admin/orders" element={<ProtectedRoute element={<OrdersList/>} adminOnly={true}/>}/>

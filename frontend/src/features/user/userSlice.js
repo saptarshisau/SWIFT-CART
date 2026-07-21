@@ -54,9 +54,11 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (userD
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            withCredentials: true
+            //error--> was passing this in axios.put()
         }
-        const { data } = await axios.put('/api/v1/profile/update', { withCredentials: true }, userData, config);
+        const { data } = await axios.put('/api/v1/profile/update', userData, config);
         return data
     } catch (error) {
         return rejectWithValue(error.response?.data || { message: 'Profile update failed. Please try again later' })
