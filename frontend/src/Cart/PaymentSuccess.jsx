@@ -21,7 +21,7 @@ function PaymentSuccess() {
         const createOrderData = async () => {
             try {
                 const orderItem = JSON.parse(sessionStorage.getItem('orderItem'))
-                if (!orderItem) return;
+                if (!orderItem) return; //on refresh, reading null --> prevented re-ordering or order triggering again.
                 const orderData = {
                     shippingInfo: {
                         address: shippingInfo.address,
@@ -55,7 +55,7 @@ function PaymentSuccess() {
             }
         }
         createOrderData()
-    }, [cartItems, dispatch, reference, shippingInfo.address, shippingInfo.city, shippingInfo.country, shippingInfo.phoneNumber, shippingInfo.pinCode, shippingInfo.state]);
+    }, []);
     useEffect(() => {
         if (success) {
             toast.success('Order Placed', { position: 'top-center', autoClose: 3000 });
