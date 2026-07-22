@@ -103,7 +103,8 @@ function Dashboard() {
                         <div className="bg-white p-6 rounded-xl shadow-sm hover:-translate-y-1 transition-transform duration-300">
                             <AttachMoney className="text-[#6C5B7B] mb-4" fontSize="large" />
                             <h3 className="my-2 text-gray-500 text-sm font-medium">Total Revenue</h3>
-                            <p className="text-3xl font-bold text-gray-800 mt-1">{totalAmount}/-</p>
+                            <p className="text-3xl font-bold text-gray-800 mt-1">{Number(totalAmount || 0).toFixed(2)}/-</p>
+                            {/* fixed the rounding off of total amount */}
                         </div>
 
                         <div className="bg-white p-6 rounded-xl shadow-sm hover:-translate-y-1 transition-transform duration-300">

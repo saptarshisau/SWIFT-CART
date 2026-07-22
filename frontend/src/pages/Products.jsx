@@ -22,7 +22,7 @@ function Products() {
   const navigate = useNavigate();
 
   const category = searchParams.get("category")
-  const categories = ["laptop", "mobile", "tv", "fruits", "glass"];
+  const categories = ["laptop", "mobile", "tv", "fruits", "pant"];
 
   useEffect(() => {
     dispatch(getProduct({ keyword, page: currentPage, category }))
