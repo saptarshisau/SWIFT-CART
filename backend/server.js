@@ -35,7 +35,7 @@ export const instance = new Razorpay({
 })
 
 const server = app.listen(port, () => {
-  // console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
 // console.log(hello)
 //handle unhandled promise rejection

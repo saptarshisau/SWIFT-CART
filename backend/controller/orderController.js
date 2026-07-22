@@ -75,7 +75,7 @@ export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
     }
     if (
         order.orderStatus === "Processing" &&
-        req.body.status === "Dispatched"
+        req.body.status !== "Processing"
     ) {
         //another bug for undefined orderStatus
         await Promise.all(order.orderItems.map(item => updateQuantity(item.product, item.quantity)

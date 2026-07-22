@@ -43,24 +43,24 @@ function Shipping() {
             <div className="flex flex-col gap-2">
               <label htmlFor="address" className="text-[#4E4A59] text-[15px] font-semibold">Address</label>
               {/* htmlFor coz clicking on the label activates the field */}
-              <input type="text" id="address" name="address" placeholder="Enter your address" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400" />
+              <input type="text" id="address" name="address" required placeholder="Enter your address" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400" />
             </div>
 
             <div className="flex flex-col gap-2">
               <label htmlFor="pinCode" className="text-[#4E4A59] text-[15px] font-semibold">PinCode</label>
-              <input type="number" id="pinCode" name="pinCode" placeholder="Enter your pinCode" value={pinCode} onChange={(e) => setPinCode(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400" />
+              <input type="number" id="pinCode" name="pinCode" required placeholder="Enter your pinCode" value={pinCode} onChange={(e) => setPinCode(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400" />
             </div>
 
             <div className="flex flex-col gap-2">
               <label htmlFor="phoneNumber" className="text-[#4E4A59] text-[15px] font-semibold">Phone Number</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400" />
+              <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="Enter your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400" />
             </div>
           </div>
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <label htmlFor="country" className="text-[#4E4A59] text-[15px] font-semibold">Country</label>
-              <select name="country" id="country" value={country} onChange={(e) => {
+              <select name="country" id="country" required value={country} onChange={(e) => {
                 setCountry(e.target.value)
                 setState("");
                 setCity("")
@@ -74,7 +74,7 @@ function Shipping() {
 
             {country && <div className="flex flex-col gap-2 animate-[fadeIn_0.3s_ease-in-out]">
               <label htmlFor="state" className="text-[#4E4A59] text-[15px] font-semibold">State</label>
-              <select name="state" id="state" value={state} onChange={(e) => {
+              <select name="state" id="state" required value={state} onChange={(e) => {
                 setState(e.target.value)
                 setCity("")
               }
@@ -88,7 +88,7 @@ function Shipping() {
 
             {state && <div className="flex flex-col gap-2 animate-[fadeIn_0.3s_ease-in-out]">
               <label htmlFor="city" className="text-[#4E4A59] text-[15px] font-semibold">City</label>
-              <select name="city" id="city" value={city} onChange={(e) => setCity(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400 cursor-pointer">
+              <select name="city" id="city" required value={city} onChange={(e) => setCity(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg bg-gray-50/50 text-[#3B3B4F] text-[15px] transition-all duration-300 focus:outline-none focus:border-[#6C5B7B] focus:ring-4 focus:ring-[#6C5B7B]/10 focus:bg-white placeholder-gray-400 cursor-pointer">
                 <option value="">Select a City</option>
                 {City && City.getCitiesOfState(country, state).map((item) => (
                   <option value={item.name} key={item.name}>{item.name}</option>

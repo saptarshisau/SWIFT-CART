@@ -58,14 +58,15 @@ function PaymentSuccess() {
     }, []);
     useEffect(() => {
         if (success) {
-            toast.success('Order Placed', { position: 'top-center', autoClose: 3000 });
+            toast.success('Order Placed', { position: 'top-center', autoClose: 3000, toastId: 'order-placed' });
             dispatch(clearCart())
             dispatch(removeSuccess())
         }
     }, [dispatch, success])
     useEffect(() => {
         if (error) {
-            toast.success(error, { position: 'top-center', autoClose: 3000 });
+            toast.error(error, { position: 'top-center', autoClose: 3000 });
+            //error i was sending success toast with error
             dispatch(removeErrors())
         }
     }, [dispatch, error])
