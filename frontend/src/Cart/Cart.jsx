@@ -8,9 +8,9 @@ import { Link, useNavigate } from 'react-router-dom'
 function Cart() {
     const { cartItems } = useSelector(state => state.cart)
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
-    const tax = subtotal * 0.18
+    const tax = Number((subtotal * 0.18).toFixed(2))
     const shippingCharges = subtotal > 500 ? 0 : 50
-    const total = subtotal + tax + shippingCharges;
+    const total = Number((subtotal + tax + shippingCharges).toFixed(2));
     const navigate = useNavigate();
     const checkoutHandler = () => {
         navigate(`/login?redirect=/shipping`)

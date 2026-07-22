@@ -23,7 +23,7 @@ function Payment() {
       //These are configuration options for the Razorpay Checkout SDK.
       const options = {
         key,
-        amount,
+        amount: Math.round(amount * 100),
         currency: 'INR',
         name: 'SwiftCart',
         description: 'Ecommerce Website Payment Transaction',

@@ -31,5 +31,8 @@
     "react-redux": "^9.3.0",
     "react-toastify": "^11.1.0",
     "validator": "^13.15.35"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
   }
 }
