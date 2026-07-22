@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "../AdminStyles/CreateProduct.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageTitle from "../components/PageTitle";
@@ -18,7 +17,7 @@ function CreateProduct() {
     const [image, setImage] = useState([]);
     const [imagePreview, setImagePreview] = useState([]);
 
-    const categories = ["glass", "shirt", "mobile", "dress", "tv", "pant", "jacket"];
+    const categories = ["glass", "shirt", "mobile", "dress", "tv", "pant", "fruits"];
 
     const createProductSubmit = (e) => {
         e.preventDefault();
@@ -74,12 +73,12 @@ function CreateProduct() {
         <>
             <Navbar />
             <PageTitle title="Create Product" />
-            <div className="create-product-container">
-                <h1 className="form-title">Create Product</h1>
-                <form className="product-form" encType="multipart/form-data" onSubmit={createProductSubmit}>
+            <div className="max-w-2xl mt-24 mx-auto p-4 md:p-5 bg-white rounded-lg shadow-md mb-24">
+                <h1 className="text-center text-2xl md:text-3xl mb-5 font-semibold text-gray-800">Create Product</h1>
+                <form className="flex flex-col gap-3 md:gap-4" encType="multipart/form-data" onSubmit={createProductSubmit}>
                     <input
                         type="text"
-                        className="form-input"
+                        className="p-3 border border-gray-300 rounded-md text-base focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800"
                         placeholder="Enter Product Name"
                         required
                         name="name"
@@ -88,7 +87,7 @@ function CreateProduct() {
                     />
                     <input
                         type="number"
-                        className="form-input"
+                        className="p-3 border border-gray-300 rounded-md text-base focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800"
                         placeholder="Enter Product Price"
                         required
                         name="price"
@@ -97,7 +96,7 @@ function CreateProduct() {
                     />
                     <input
                         type="text"
-                        className="form-input"
+                        className="p-3 border border-gray-300 rounded-md text-base focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800"
                         placeholder="Enter Product Description"
                         required
                         name="description"
@@ -105,7 +104,7 @@ function CreateProduct() {
                         onChange={(e) => setDescription(e.target.value)}
                     />
                     <select
-                        className="form-select"
+                        className="p-3 border border-gray-300 rounded-md text-base focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800 cursor-pointer"
                         required
                         name="category"
                         value={category}
@@ -120,34 +119,39 @@ function CreateProduct() {
                     </select>
                     <input
                         type="number"
-                        className="form-input"
+                        className="p-3 border border-gray-300 rounded-md text-base focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800"
                         placeholder="Enter Product Stock"
                         required
                         name="stock"
                         value={stock}
                         onChange={(e) => setStock(e.target.value)}
                     />
-                    <div className="file-input-container">
+                    <div className="flex flex-col">
                         <input
                             type="file"
                             accept="image/"
-                            className="form-input-file"
+                            className="p-3 border border-gray-300 rounded-md text-base focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800"
                             multiple
                             name="image"
                             onChange={createProductImage}
                         />
                     </div>
-                    <div className="image-preview-container">
+                    <div className="flex gap-3 mt-3 overflow-x-auto">
                         {imagePreview.map((img, index) => (
                             <img
                                 src={img}
                                 alt="Product Preview"
-                                className="image-preview"
+                                className="w-24 h-24 object-cover rounded-lg"
                                 key={index}
                             />
                         ))}
                     </div>
-                    <button className="submit-btn">{loading ? 'Creating Product...' : 'Create'}</button>
+                    <button
+                        className="p-3 bg-slate-800 text-white text-lg rounded-md cursor-pointer transition-colors duration-300 hover:bg-slate-900 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                        disabled={loading}
+                    >
+                        {loading ? 'Creating Product...' : 'Create'}
+                    </button>
                 </form>
             </div>
 

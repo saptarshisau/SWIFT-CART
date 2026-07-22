@@ -2,7 +2,9 @@ import app from "./app.js";
 import dotenv from "dotenv";
 import { connectMongoDatabase } from "./config/db.js";
 // console.log(app);
-dotenv.config({ path: "backend/config/.env" });
+if (process.env.NODE_ENV !== 'PRODUCTION') {
+  dotenv.config({ path: 'backend/config/.env' });
+}
 import Razorpay from "razorpay";
 import { v2 as cloudinary } from 'cloudinary';
 const port = process.env.PORT || 3000;

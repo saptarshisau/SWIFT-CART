@@ -146,7 +146,7 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
   });
 });
 
-//6️⃣ Creating and Updating Review
+//Creating and Updating Review
 export const createReviewForProduct = handleAsyncError(
   async (req, res, next) => {
     const { rating, comment, productId } = req.body;
@@ -190,7 +190,7 @@ export const createReviewForProduct = handleAsyncError(
   }
 );
 
-// 7️⃣Getting reviews
+// Getting reviews
 export const getProductReviews = handleAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.query.id);
   if (!product) {
@@ -202,7 +202,7 @@ export const getProductReviews = handleAsyncError(async (req, res, next) => {
   });
 });
 
-// 8️⃣Deleting Reviews
+// Deleting Reviews
 export const deleteReview = handleAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
   if (!product) {
@@ -235,7 +235,7 @@ export const deleteReview = handleAsyncError(async (req, res, next) => {
   });
 });
 
-// 9️⃣Admin - Getting all products
+// Admin - Getting all products
 export const getAdminProducts = handleAsyncError(async (req, res, next) => {
   const products = await Product.find();
   res.status(200).json({
