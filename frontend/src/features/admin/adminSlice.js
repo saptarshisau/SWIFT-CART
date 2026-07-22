@@ -237,6 +237,7 @@ const adminSlice = createSlice({
 
         builder
             .addCase(deleteProduct.pending, (state, action) => {
+                // product not deleted error--> forgot to include action as the parameter for this reducer
                 const productId = action.meta.arg;
                 state.deleting[productId] = true;
             })

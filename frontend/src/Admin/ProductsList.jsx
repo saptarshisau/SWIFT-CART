@@ -25,6 +25,7 @@ function ProductsList() {
         const isConfirmed = window.confirm('Are you sure you want to delete this product?')
         if (isConfirmed) {
             dispatch(deleteProduct(productId)).then((action) => {
+                //could have sent from the backend but a new way 
                 if (action.type === 'admin/deleteProduct/fulfilled') {
                     toast.success("Product Deleted Successfully", { position: 'top-center', autoClose: 3000 })
                     dispatch(removeSuccess());
