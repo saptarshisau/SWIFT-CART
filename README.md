@@ -138,45 +138,55 @@ Tracks the entire lifecycle of a customer purchase, shipping details, and paymen
 All API endpoints are prefixed with `/api/v1`
 
 ### Products
-- `GET /products` - Get all products (supports search queries)
-- `GET /product/:id` - Get a single product details
-- `PUT /review` - Create or update a product review
-- `GET /reviews` - Get all reviews for a product
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/products` | Get all products (supports search queries) |
+| `GET` | `/product/:id` | Get a single product details |
+| `PUT` | `/review` | Create or update a product review |
+| `GET` | `/reviews` | Get all reviews for a product |
 
 ### Orders
-- `POST /new/order` - Create a new order (Decrements stock)
-- `GET /order/:id` - Get details of a specific order
-- `GET /orders/user` - Get logged in user's orders
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/new/order` | Create a new order (Decrements stock) |
+| `GET` | `/order/:id` | Get details of a specific order |
+| `GET` | `/orders/user` | Get logged in user's orders |
 
 ### Users & Auth
-- `POST /register` - Register a new user
-- `POST /login` - Login user and set JWT cookie
-- `POST /logout` - Logout user and destroy cookie
-- `POST /password/forgot` - Request password reset email
-- `POST /reset/:token` - Reset password using crypto token
-- `GET /profile` - Get logged in user details
-- `PUT /profile/update` - Update user profile
-- `PUT /password/update` - Update user password
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/register` | Register a new user |
+| `POST` | `/login` | Login user and set JWT cookie |
+| `POST` | `/logout` | Logout user and destroy cookie |
+| `POST` | `/password/forgot` | Request password reset email |
+| `POST` | `/reset/:token` | Reset password using crypto token |
+| `GET` | `/profile` | Get logged in user details |
+| `PUT` | `/profile/update` | Update user profile |
+| `PUT` | `/password/update` | Update user password |
 
 ### Payments
-- `POST /payment/process` - Create a Razorpay order
-- `GET /getKey` - Get Razorpay API Key for frontend verification
-- `POST /paymentVerification` - Verify Razorpay payment signature via HMAC SHA256
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/payment/process` | Create a Razorpay order |
+| `GET` | `/getKey` | Get Razorpay API Key for frontend verification |
+| `POST` | `/paymentVerification` | Verify Razorpay payment signature via HMAC SHA256 |
 
 ### Admin Only Routes
-- `GET /admin/products` - Get all products (Admin)
-- `POST /admin/product/create` - Create a new product
-- `PUT /admin/product/:id` - Update a product
-- `DELETE /admin/product/:id` - Delete a product
-- `GET /admin/reviews` - Get all reviews
-- `DELETE /admin/reviews` - Delete a specific review
-- `GET /admin/orders` - Get all orders
-- `PUT /admin/order/:id` - Update order status (Processing/Shipped/Delivered)
-- `DELETE /admin/order/:id` - Delete an order
-- `GET /admin/users` - Get all users
-- `GET /admin/user/:id` - Get specific user details
-- `PUT /admin/user/:id` - Update user role
-- `DELETE /admin/user/:id` - Delete a user
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/admin/products` | Get all products (Admin) |
+| `POST` | `/admin/product/create` | Create a new product |
+| `PUT` | `/admin/product/:id` | Update a product |
+| `DELETE` | `/admin/product/:id` | Delete a product |
+| `GET` | `/admin/reviews` | Get all reviews |
+| `DELETE` | `/admin/reviews` | Delete a specific review |
+| `GET` | `/admin/orders` | Get all orders |
+| `PUT` | `/admin/order/:id` | Update order status (Processing/Shipped/Delivered) |
+| `DELETE` | `/admin/order/:id` | Delete an order |
+| `GET` | `/admin/users` | Get all users |
+| `GET` | `/admin/user/:id` | Get specific user details |
+| `PUT` | `/admin/user/:id` | Update user role |
+| `DELETE` | `/admin/user/:id` | Delete a user |
 
 ---
 
