@@ -62,6 +62,77 @@ The application implements a robust, two-tiered security model to protect sensit
 
 ---
 
+## 🗄️ Database Schema & Relationships
+
+The application uses MongoDB as its primary database, with Mongoose enforcing structured schemas. The database consists of three primary collections: **Users**, **Products**, and **Orders**.
+
+### Entity Relationships
+
+- **User & Product (One-to-Many):** A specific User (Admin) creates a Product. Thus, the Product schema stores a reference to the `User` who created it. Additionally, users can leave reviews on products. Each review within a Product's `reviews` array contains a reference to the `User` who authored the review.
+- **User & Order (One-to-Many):** A User can place multiple orders. Each document in the Order collection contains a reference to the `User` who placed it, ensuring order history is securely tied to the respective account.
+- **Order & Product (Many-to-Many via Order Items):** An Order contains an `orderItems` array. Each item within this array holds a direct reference (`ObjectId`) to the specific `Product` purchased, allowing the system to fetch real-time product details and adjust inventory levels upon order confirmation.
+
+### 1. User Collection (`User`)
+Stores all authentication credentials, profile information, and authorization roles.
+
+- `name`: (String, Required) User's full name (3-25 characters).
+- `email`: (String, Required, Unique) Validated email address.
+- `password`: (String, Required) Hashed password (min 8 characters). Hidden by default in queries (`select: false`).
+- `avatar`: (Object)
+  - `public_id`: (String, Required) Cloudinary image ID.
+  - `url`: (String, Required) Cloudinary image URL.
+- `role`: (String) Determines access level. Defaults to `"user"`. Can be upgraded to `"admin"`.
+- `resetPasswordToken`: (String) Temporary token for password recovery.
+- `resetPasswordExpire`: (Date) Expiration timestamp for the reset token.
+- `timestamps`: Automatically manages `createdAt` and `updatedAt`.
+
+### 2. Product Collection (`Product`)
+Stores the catalog of all items available for purchase, including inventory and nested reviews.
+
+- `name`: (String, Required) Name of the product.
+- `description`: (String, Required) Detailed description.
+- `price`: (Number, Required) Price of the product (Max 7 digits).
+- `ratings`: (Number) Average rating based on all user reviews. Defaults to `0`.
+- `image`: (Array of Objects) Supports multiple product images.
+  - `public_id`: (String, Required) Cloudinary image ID.
+  - `url`: (String, Required) Cloudinary image URL.
+- `category`: (String, Required) Product category for filtering.
+- `stock`: (Number, Required) Current inventory level (Max 5 digits). Defaults to `1`.
+- `numOfReviews`: (Number) Total count of reviews. Defaults to `0`.
+- `reviews`: (Array of Objects) Embedded documents for user feedback.
+  - `user`: (ObjectId, Ref: `User`, Required) The user who left the review.
+  - `name`: (String, Required) Reviewer's name.
+  - `rating`: (Number, Required) Individual rating given.
+  - `comment`: (String, Required) Textual review content.
+- `user`: (ObjectId, Ref: `User`, Required) The admin user who created this product listing.
+- `createdAt`: (Date) Timestamp of product creation.
+
+### 3. Order Collection (`Order`)
+Tracks the entire lifecycle of a customer purchase, shipping details, and payment status.
+
+- `shippingInfo`: (Object, Required) Where the order should be delivered.
+  - `address`, `city`, `state`, `country`, `pinCode`, `phoneNo`: All required fields.
+- `orderItems`: (Array of Objects, Required) Snapshot of the items purchased.
+  - `name`: (String, Required) Product name at time of purchase.
+  - `price`: (Number, Required) Product price at time of purchase.
+  - `quantity`: (Number, Required) Quantity ordered.
+  - `image`: (String, Required) Main product image URL.
+  - `product`: (ObjectId, Ref: `Product`, Required) Link to the original product in the database.
+- `user`: (ObjectId, Ref: `User`, Required) The customer who placed the order.
+- `paymentInfo`: (Object, Required) Details from the payment gateway.
+  - `id`: (String, Required) Payment transaction ID (e.g., Razorpay payment ID).
+  - `status`: (String, Required) Payment status.
+- `paidAt`: (Date, Required) Timestamp of successful payment.
+- `itemPrice`: (Number, Required) Subtotal of items.
+- `taxPrice`: (Number, Required) Calculated tax.
+- `shippingPrice`: (Number, Required) Delivery charges.
+- `totalPrice`: (Number, Required) Final billed amount.
+- `orderStatus`: (String, Required) Current lifecycle status (Defaults to `"Processing"`).
+- `deliveredAt`: (Date) Timestamp when the order was fulfilled.
+- `createdAt`: (Date) Order placement timestamp.
+
+---
+
 ## 📡 API Routings
 
 All API endpoints are prefixed with `/api/v1`
