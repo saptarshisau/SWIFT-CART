@@ -125,9 +125,9 @@ function ProductDetails() {
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-around items-center">
                     <div className="static md:sticky top-[40px] z-10 mb-5 w-full md:w-[500px]">
                         <img src={selectedImage ? selectedImage.replace('./', '/') : product.image[0].url.replace('./', '/')} alt={product.name} className="w-full max-h-[500px] object-contain rounded-lg bg-white" />
-                        {product.image.length > 1 && (<div className="mt-5">
+                        {product.image.length > 1 && (<div className="mt-5 flex flex-row justify-center gap-4">
                             {product.image.map((img, index) => (
-                                <img key={index} src={img.url.replace('./', '/')} alt={`Thumbnail ${index + 1}`} className="w-[80px] h-[80px] object-cover cursor-pointer ml-[10px] transition-transform duration-300 hover:scale-110" onClick={() => setSelectedImage(img.url)} />
+                                <img key={index} src={img.url.replace('./', '/')} alt={`Thumbnail ${index + 1}`} className="w-[80px] h-[80px] object-cover rounded-md cursor-pointer transition-transform duration-300 hover:scale-110 shadow-sm" onClick={() => setSelectedImage(img.url)} />
                             ))}
                         </div>)}
                     </div>
