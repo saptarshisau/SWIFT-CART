@@ -29,7 +29,7 @@ function Home() {
       {loading ?
         (<Loader />)
         : (<>
-          <PageTitle title="Home-My Website" />
+          <PageTitle title="Home | SwiftCart" />
           <Navbar />
           <ImageSlider />
           <div className="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
