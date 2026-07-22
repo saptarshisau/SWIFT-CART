@@ -14,7 +14,7 @@ function ProductDetails() {
     const [userRating, setUserRating] = useState(0);
     const [comment, setComment] = useState("")
     const [quantity, setQuantity] = useState(1);
-    // const [selectedImage, setSelectedImage] = useState("");
+    const [selectedImage, setSelectedImage] = useState("");
     const handleRatingChange = (newRating) => {
         setUserRating(newRating)
     }
@@ -93,11 +93,11 @@ function ProductDetails() {
             dispatch(getProductDetails(id))
         }
     }, [reviewSuccess, id, dispatch])
-    // useEffect(() => {
-    //     if (product && product.image && product.image.length > 0) {
-    //         setSelectedImage(product.image[0].url)
-    //     }
-    // }, [product])
+    useEffect(() => {
+        if (product && product.image && product.image.length > 0) {
+            setSelectedImage(product.image[0].url)
+        }
+    }, [product])
     if (loading) {
         return (
             <>
@@ -125,11 +125,11 @@ function ProductDetails() {
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-around items-center">
                     <div className="static md:sticky top-[40px] z-10 mb-5 w-full md:w-[500px]">
                         <img src={product.image[0].url.replace('./', '/')} alt={product.name} className="w-full max-h-[500px] object-contain rounded-lg bg-white" />
-                        {/* {product.image.length > 1 && (<div className="mt-5">
+                        {product.image.length > 1 && (<div className="mt-5">
                             {product.image.map((img, index) => (
                                 <img src={img.url} alt={`Thumbnail ${index + 1}`} className="w-[80px] h-[80px] object-cover cursor-pointer ml-[10px] transition-transform duration-300 hover:scale-110" onClick={() => setSelectedImage(img.url)} />
                             ))}
-                        </div>)} */}
+                        </div>)}
                     </div>
 
                     <div className="p-5 w-full md:w-[500px]">

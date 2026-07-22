@@ -159,7 +159,7 @@ function UpdateProduct() {
           </div>
           <div className="update-product-old-images-wrapper">
             {oldImage.map((img, index) => (
-              <img src={img.url} alt="Old Product Preview" key={index} className="update-product-old-image" />
+              <img src={img.url.replace('./', '/')} alt="Old Product Preview" key={index} className="update-product-old-image" />
             ))}
           </div>
           <button className="update-product-submit-btn">{loading ? 'Updating...' : 'Update'}</button>
