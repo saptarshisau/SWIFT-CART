@@ -133,60 +133,73 @@ Tracks the entire lifecycle of a customer purchase, shipping details, and paymen
 
 ---
 
+## 🛡️ Middleware Architecture
+
+The application relies on several custom middlewares to handle authentication, authorization, and error handling seamlessly across routes.
+
+| Middleware | Purpose & Behavior |
+| :--- | :--- |
+| `handleAsyncError` | A wrapper function that catches unhandled promise rejections in async controller functions and passes them to the global error handler. This prevents server crashes from async errors. |
+| `verifyUserAuth` | Validates the JWT stored in HTTP-only cookies. If a valid token is found, it decodes the payload and attaches the authenticated user to `req.user`. If missing or invalid, it returns a `401 Unauthorized` error. |
+| `roleBasedAccess(...roles)` | A higher-order function acting as a gatekeeper. It checks if the `req.user.role` (set by `verifyUserAuth`) exists in the provided `roles` array. If not, it blocks the request with a `403 Forbidden` error. |
+| `errorMiddleware` | A global error handler that intercepts all application errors. It standardizes error responses, including handling specific Mongoose errors like `CastError` (invalid MongoDB ObjectIDs) and duplicate key errors (e.g., duplicate emails). |
+
+---
+
 ## 📡 API Routings
 
 All API endpoints are prefixed with `/api/v1`
 
 ### Products
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/products` | Get all products (supports search queries) |
-| `GET` | `/product/:id` | Get a single product details |
-| `PUT` | `/review` | Create or update a product review |
-| `GET` | `/reviews` | Get all reviews for a product |
+| Method | Endpoint | Middlewares Triggered | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/products` | None (Public) | Get all products (supports search queries) |
+| `GET` | `/product/:id` | None (Public) | Get a single product details |
+| `PUT` | `/review` | `verifyUserAuth` | Create or update a product review |
+| `GET` | `/reviews` | `verifyUserAuth` | Get all reviews for a product |
 
 ### Orders
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `POST` | `/new/order` | Create a new order (Decrements stock) |
-| `GET` | `/order/:id` | Get details of a specific order |
-| `GET` | `/orders/user` | Get logged in user's orders |
+| Method | Endpoint | Middlewares Triggered | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/new/order` | `verifyUserAuth` | Create a new order (Decrements stock) |
+| `GET` | `/order/:id` | `verifyUserAuth` | Get details of a specific order |
+| `GET` | `/orders/user` | `verifyUserAuth` | Get logged in user's orders |
 
 ### Users & Auth
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `POST` | `/register` | Register a new user |
-| `POST` | `/login` | Login user and set JWT cookie |
-| `POST` | `/logout` | Logout user and destroy cookie |
-| `POST` | `/password/forgot` | Request password reset email |
-| `POST` | `/reset/:token` | Reset password using crypto token |
-| `GET` | `/profile` | Get logged in user details |
-| `PUT` | `/profile/update` | Update user profile |
-| `PUT` | `/password/update` | Update user password |
+| Method | Endpoint | Middlewares Triggered | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/register` | None (Public) | Register a new user |
+| `POST` | `/login` | None (Public) | Login user and set JWT cookie |
+| `POST` | `/logout` | None (Public) | Logout user and destroy cookie |
+| `POST` | `/password/forgot` | None (Public) | Request password reset email |
+| `POST` | `/reset/:token` | None (Public) | Reset password using crypto token |
+| `GET` | `/profile` | `verifyUserAuth` | Get logged in user details |
+| `PUT` | `/profile/update` | `verifyUserAuth` | Update user profile |
+| `PUT` | `/password/update` | `verifyUserAuth` | Update user password |
 
 ### Payments
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `POST` | `/payment/process` | Create a Razorpay order |
-| `GET` | `/getKey` | Get Razorpay API Key for frontend verification |
-| `POST` | `/paymentVerification` | Verify Razorpay payment signature via HMAC SHA256 |
+| Method | Endpoint | Middlewares Triggered | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/payment/process` | `verifyUserAuth` | Create a Razorpay order |
+| `GET` | `/getKey` | `verifyUserAuth` | Get Razorpay API Key for frontend verification |
+| `POST` | `/paymentVerification` | None (Public) | Verify Razorpay payment signature via HMAC SHA256 |
 
 ### Admin Only Routes
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/admin/products` | Get all products (Admin) |
-| `POST` | `/admin/product/create` | Create a new product |
-| `PUT` | `/admin/product/:id` | Update a product |
-| `DELETE` | `/admin/product/:id` | Delete a product |
-| `GET` | `/admin/reviews` | Get all reviews |
-| `DELETE` | `/admin/reviews` | Delete a specific review |
-| `GET` | `/admin/orders` | Get all orders |
-| `PUT` | `/admin/order/:id` | Update order status (Processing/Shipped/Delivered) |
-| `DELETE` | `/admin/order/:id` | Delete an order |
-| `GET` | `/admin/users` | Get all users |
-| `GET` | `/admin/user/:id` | Get specific user details |
-| `PUT` | `/admin/user/:id` | Update user role |
-| `DELETE` | `/admin/user/:id` | Delete a user |
+| Method | Endpoint | Middlewares Triggered | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/admin/products` | `verifyUserAuth`, `roleBasedAccess('admin')` | Get all products (Admin) |
+| `POST` | `/admin/product/create` | `verifyUserAuth`, `roleBasedAccess('admin')` | Create a new product |
+| `PUT` | `/admin/product/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Update a product |
+| `DELETE` | `/admin/product/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Delete a product |
+| `GET` | `/admin/reviews` | `verifyUserAuth`, `roleBasedAccess('admin')` | Get all reviews |
+| `DELETE` | `/admin/reviews` | `verifyUserAuth`, `roleBasedAccess('admin')` | Delete a specific review |
+| `GET` | `/admin/orders` | `verifyUserAuth`, `roleBasedAccess('admin')` | Get all orders |
+| `PUT` | `/admin/order/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Update order status (Processing/Shipped/Delivered) |
+| `DELETE` | `/admin/order/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Delete an order |
+| `GET` | `/admin/users` | `verifyUserAuth`, `roleBasedAccess('admin')` | Get all users |
+| `GET` | `/admin/user/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Get specific user details |
+| `PUT` | `/admin/user/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Update user role |
+| `DELETE` | `/admin/user/:id` | `verifyUserAuth`, `roleBasedAccess('admin')` | Delete a user |
 
 ---
 
