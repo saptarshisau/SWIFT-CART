@@ -146,6 +146,37 @@ The application relies on several custom middlewares to handle authentication, a
 
 ---
 
+## 📦 Detailed Package Dependencies
+
+This section provides an in-depth look at the external libraries and packages that power SwiftCart.
+
+### 🎨 Frontend Dependencies
+- **React (`react`, `react-dom`)**: Core library for building the component-based user interface.
+- **Vite (`vite`)**: Next-generation, blazing-fast frontend tooling and bundler.
+- **React Router DOM (`react-router-dom`)**: Handles client-side routing, enabling a Single Page Application (SPA) experience without page reloads.
+- **Redux Toolkit (`@reduxjs/toolkit`, `react-redux`)**: Modern, opinionated state management for handling global states like the shopping cart, user session, and product data.
+- **Tailwind CSS (`tailwindcss`, `@tailwindcss/vite`)**: Utility-first CSS framework for rapid UI styling and mobile responsiveness.
+- **Material-UI (MUI) (`@mui/material`, `@mui/icons-material`)**: Used for robust, pre-built UI components and high-quality SVG icons.
+- **React Icons (`react-icons`)**: Provides a unified interface for including popular icon libraries.
+- **React Toastify (`react-toastify`)**: Delivers elegant and highly customizable toast notifications for alerting users of success or error events.
+
+### ⚙️ Backend Dependencies
+- **Express (`express`)**: Fast, unopinionated web framework for Node.js used to build the RESTful API endpoints.
+- **Mongoose (`mongoose`)**: Elegant MongoDB object modeling tool providing strict schema validation and simplified database interaction.
+- **JSON Web Token (`jsonwebtoken`)**: Generates secure JWTs used for stateless, secure user authentication.
+- **Bcrypt (`bcrypt`)**: Cryptography library for securely hashing user passwords before saving them to the database, protecting against rainbow table attacks.
+- **Cookie Parser (`cookie-parser`)**: Middleware that parses `Cookie` headers and populates `req.cookies`, which is crucial for reading the secure, HTTP-only auth token.
+- **Dotenv (`dotenv`)**: Loads environment variables from a `.env` file into `process.env`, keeping secrets out of the codebase.
+- **Express FileUpload (`express-fileupload`)**: Middleware for intercepting `multipart/form-data` and making uploaded files accessible, enabling users to upload avatars and product images.
+- **Cloudinary (`cloudinary`)**: Node.js SDK for uploading, manipulating, and serving images seamlessly from Cloudinary's cloud storage.
+- **Razorpay (`razorpay`)**: Official SDK for integrating the Razorpay payment gateway to process user checkouts securely.
+- **Nodemailer (`nodemailer`)**: Module for sending outbound emails (used for the "forgot password" recovery flow).
+- **Validator (`validator`)**: Library for advanced string validation, utilized in Mongoose schemas to verify formats like valid email addresses.
+- **Country State City (`country-state-city`)**: Provides comprehensive local data of countries, states, and cities, specifically used to populate dropdowns during the checkout and shipping process.
+- **Axios (`axios`)**: Promise-based HTTP client used to seamlessly make asynchronous HTTP requests to external APIs or between client and server.
+
+---
+
 ## 📡 API Routings
 
 All API endpoints are prefixed with `/api/v1`
