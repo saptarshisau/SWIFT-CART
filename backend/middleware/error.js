@@ -16,6 +16,11 @@ export default (err, req, res, next) => {
         const message = `This ${Object.keys(err.keyValue)} already exists.`
         err = new HandleError(message, 400)
     }
+    //mongoose schema validation error, eg. password shorter than minLength
+    if (err.name === "ValidationError") {
+        const message = Object.values(err.errors).map((val) => val.message).join(", ")
+        err = new HandleError(message, 400)
+    }
     res.status(err.statusCode).json({
         success: false,
         message: err.message,
