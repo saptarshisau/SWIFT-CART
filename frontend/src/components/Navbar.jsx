@@ -5,8 +5,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import '../componentStyles/Navbar.css';
-import '../pageStyles/Search.css'
 import { useSelector } from 'react-redux';
 
 
@@ -114,7 +112,7 @@ function Navbar() {
                         </form>
                     </div>
 
-                    <div className="cart-container">
+                    <div className="relative">
                         <Link to="/cart">
                             <ShoppingCartIcon className="cursor-pointer text-slate-700 transition-colors hover:text-indigo-600" />
                             <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1 text-xs font-semibold text-white">

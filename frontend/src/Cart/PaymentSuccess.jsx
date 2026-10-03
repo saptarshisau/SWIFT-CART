@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import '../CartStyles/PaymentSuccess.css'
 import { Link, useSearchParams } from 'react-router-dom';
 import PageTitle from '../components/PageTitle'
 import Navbar from '../components/Navbar'
@@ -75,14 +74,14 @@ function PaymentSuccess() {
             {loading ? (<Loader />) : (<>
                 <PageTitle title="Payment Status" />
                 <Navbar />
-                <div className="payment-success-container">
-                    <div className="success-content">
-                        <div className="success-icon">
-                            <div className="checkmark"></div>
+                <div className="flex min-h-screen flex-col items-center justify-center p-6 pt-24 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-600">
+                            <div className="-mt-1.5 h-10 w-5 rotate-45 border-solid border-white border-r-[6px] border-b-[6px]"></div>
                         </div>
-                        <h1>Order Confirmed!</h1>
-                        <p>Your payment was successful. Reference ID <strong>{reference}</strong></p>
-                        <Link className='explore-btn' to="/orders/user">View Orders</Link>
+                        <h1 className="mb-2 text-3xl font-bold text-green-600">Order Confirmed!</h1>
+                        <p className="my-6 text-slate-500">Your payment was successful. Reference ID <strong className="text-slate-700">{reference}</strong></p>
+                        <Link className="rounded-md bg-indigo-600 px-6 py-3 font-medium text-white transition-colors duration-300 hover:bg-indigo-700" to="/orders/user">View Orders</Link>
                     </div>
                 </div>
                 <Footer />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import '../componentStyles/ImageSlider.css';
 const images = [
   "./images/banner1.png",
   "./images/banner2.png",
@@ -20,19 +19,19 @@ function ImageSlider() {
     //the interval will be cleared when the component unmounts
   }, [])
   return (
-    <div className="image-slider-container">
-      <div className="slider-images" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+    <div className="relative mt-24 h-[250px] w-full overflow-hidden md:h-[300px] lg:h-[450px]">
+      <div className="flex h-full transition-transform duration-1000 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
         {images.map((image, index) =>
-        (<div className="slider-item" key={index}>
-          <img src={image} alt={`Slide ${index + 1}`} />
+        (<div className="h-full min-w-full" key={index}>
+          <img src={image} alt={`Slide ${index + 1}`} className="h-full w-full object-cover" />
         </div>))
         }
         {/* array.map((element, index, array) => {}) */}
       </div>
 
-      <div className="slider-dots">
+      <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-2">
         {images.map((_, index) => (
-          <span className={`dot ${index === currentIndex ? 'active' : ''}`} onClick={() => setCurrentIndex(index)} key={index} />
+          <span className={`h-2.5 w-2.5 cursor-pointer rounded-full transition-colors duration-300 hover:bg-white ${index === currentIndex ? 'bg-white' : 'bg-white/70'}`} onClick={() => setCurrentIndex(index)} key={index} />
         ))}
       </div>
     </div>
