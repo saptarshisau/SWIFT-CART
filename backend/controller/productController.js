@@ -9,7 +9,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
   //console.log(req.query)
-  const resultPerPage = 5;
+  const resultPerPage = 4;
   const apiFeatures = new APIFunctionality(Product.find(), req.query).search().filter()
   //dont worry if you only want to search with keyword, the filter() returns empty query object and it is not added up with search()
   //this gives the whole query as an object of that class, not executed yet
